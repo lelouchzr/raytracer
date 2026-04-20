@@ -1,0 +1,6 @@
+# P6 pixel bytes must never be treated as text or converted between line endings.
+*.ppm binary
+*.png binary
+*.pfm binary
+*.hdr binary
+*.jpg binary

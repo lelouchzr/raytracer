@@ -1,0 +1,31 @@
+/build*/
+/raytracer
+/output.ppm
+*.tmp.*
+.DS_Store
+__pycache__/
+
+/plugins/*.so
+
+# Generated diagnostics and release output
+*.log
+*.jsonl
+*.sample.txt
+*.sample.txt.gz
+/doc/**/*.xml
+/doc/**/*.xml.gz
+/dist/
+
+# Keep machine diagnostics and validation captures local.
+/doc/**/*.json
+/doc/validation/
+/doc/memory-validation/
+/doc/studio-validation/
+/doc/studio-interaction-validation/
+/doc/performance-data/
+/doc/performance/
+/bonus/quality/validation/
+/bonus/quality/render-manifest.json
+/bonus/quality/render-times.json
+/bonus/reference/comparison.json
+/gallery/render-manifest-*.json
