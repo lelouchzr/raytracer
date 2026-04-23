@@ -14,3 +14,11 @@ target_compile_options(raytracer_engine PRIVATE -Wall -Wextra -Wpedantic -Wconve
 if(RAYTRACER_WERROR)
   target_compile_options(raytracer_engine PUBLIC -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Werror)
 endif()
+add_executable(raytracer src/main.cpp)
+target_link_libraries(raytracer PRIVATE raytracer_engine)
+set_target_properties(raytracer PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+# Stage the selected build at the required repository root on every normal build.
+# Keeping the actual target in its build directory prevents core/bonus test collisions.
+add_custom_target(stage_raytracer ALL
+  COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:raytracer> ${CMAKE_SOURCE_DIR}/raytracer
+  DEPENDS raytracer)
