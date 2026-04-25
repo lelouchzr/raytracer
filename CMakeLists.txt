@@ -22,3 +22,12 @@ set_target_properties(raytracer PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BIN
 add_custom_target(stage_raytracer ALL
   COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:raytracer> ${CMAKE_SOURCE_DIR}/raytracer
   DEPENDS raytracer)
+include(CTest)
+if(BUILD_TESTING)
+  add_executable(raytracer_tests tests/tests.cpp)
+  target_link_libraries(raytracer_tests PRIVATE raytracer_engine)
+  add_test(NAME raytracer_unit COMMAND raytracer_tests)
+  find_package(Python3 COMPONENTS Interpreter REQUIRED)
+  add_test(NAME raytracer_cli COMMAND ${Python3_EXECUTABLE}
+    ${CMAKE_SOURCE_DIR}/tests/integration.py $<TARGET_FILE:raytracer> ${CMAKE_SOURCE_DIR} OFF)
+endif()

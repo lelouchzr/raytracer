@@ -1,0 +1,77 @@
+{
+  "camera": {
+    "position": [
+      6,
+      3,
+      8
+    ],
+    "target": [
+      0,
+      0.8,
+      0
+    ],
+    "fov": 45
+  },
+  "render": {
+    "width": 640,
+    "height": 400,
+    "output": "output.ppm"
+  },
+  "background": [
+    0.04,
+    0.06,
+    0.1
+  ],
+  "materials": {
+    "red": {
+      "color": [
+        0.85,
+        0.08,
+        0.05
+      ]
+    },
+    "floor": {
+      "color": [
+        0.32,
+        0.4,
+        0.5
+      ]
+    }
+  },
+  "objects": [
+    {
+      "type": "cone",
+      "radius": 1,
+      "translate": [
+        0,
+        1,
+        0
+      ],
+      "material": "red",
+      "rotate": [
+        15,
+        0,
+        20
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "floor"
+    }
+  ],
+  "lights": [
+    {
+      "type": "ambient",
+      "intensity": 0.2
+    },
+    {
+      "type": "directional",
+      "direction": [
+        -1,
+        -2,
+        -1
+      ],
+      "intensity": 0.9
+    }
+  ]
+}
