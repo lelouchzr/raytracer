@@ -1,0 +1,215 @@
+{
+  "camera": {
+    "position": [
+      5,
+      3,
+      7
+    ],
+    "target": [
+      0,
+      1,
+      0
+    ],
+    "fov": 42
+  },
+  "render": {
+    "width": 640,
+    "height": 400,
+    "samples": 24,
+    "ao": 0,
+    "threads": 0,
+    "depth": 9,
+    "exposure": 1.4,
+    "output": "output.ppm"
+  },
+  "background": [
+    0.025,
+    0.045,
+    0.08
+  ],
+  "materials": {
+    "floor": {
+      "type": "phong",
+      "color": [
+        0.3,
+        0.4,
+        0.48
+      ],
+      "second": [
+        0.08,
+        0.13,
+        0.2
+      ],
+      "pattern": "checker",
+      "scale": 0.65,
+      "reflection": 0.18,
+      "specular": 0.2
+    },
+    "plinth": {
+      "type": "phong",
+      "color": [
+        0.62,
+        0.67,
+        0.7
+      ],
+      "reflection": 0.08,
+      "specular": 0.4
+    },
+    "coral": {
+      "type": "phong",
+      "color": [
+        0.8,
+        0.055,
+        0.025
+      ],
+      "reflection": 0.22,
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "glass": {
+      "type": "phong",
+      "color": [
+        0.72,
+        0.9,
+        1
+      ],
+      "transmission": 0.94,
+      "reflection": 0.03,
+      "ior": 1.52,
+      "specular": 0.8
+    },
+    "gold": {
+      "type": "phong",
+      "color": [
+        0.82,
+        0.43,
+        0.09
+      ],
+      "reflection": 0.55,
+      "specular": 0.7,
+      "shininess": 130,
+      "metallic": 0.9
+    },
+    "marble": {
+      "type": "phong",
+      "color": [
+        0.8,
+        0.9,
+        0.88
+      ],
+      "second": [
+        0.04,
+        0.12,
+        0.13
+      ],
+      "pattern": "marble",
+      "scale": 3,
+      "reflection": 0.15,
+      "specular": 0.4
+    },
+    "teal": {
+      "type": "phong",
+      "color": [
+        0.02,
+        0.42,
+        0.38
+      ],
+      "reflection": 0.3,
+      "specular": 0.6
+    },
+    "mirror": {
+      "type": "phong",
+      "color": [
+        0.8,
+        0.9,
+        1
+      ],
+      "reflection": 0.94,
+      "specular": 0.8
+    },
+    "back": {
+      "type": "phong",
+      "color": [
+        0.035,
+        0.065,
+        0.12
+      ],
+      "specular": 0
+    }
+  },
+  "objects": [
+    {
+      "type": "plane",
+      "material": "floor"
+    },
+    {
+      "type": "mobius",
+      "material": "teal",
+      "translate": [
+        0,
+        1.7,
+        0
+      ],
+      "rotate": [
+        25,
+        0,
+        0
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "type": "ambient",
+      "intensity": 0.16,
+      "color": [
+        0.6,
+        0.75,
+        1
+      ]
+    },
+    {
+      "type": "point",
+      "position": [
+        -3,
+        7,
+        5
+      ],
+      "intensity": 4,
+      "color": [
+        1,
+        0.8,
+        0.63
+      ],
+      "falloff": 0.012
+    },
+    {
+      "type": "point",
+      "position": [
+        5,
+        5,
+        -3
+      ],
+      "intensity": 4,
+      "color": [
+        0.35,
+        0.7,
+        1
+      ],
+      "falloff": 0.018
+    },
+    {
+      "type": "directional",
+      "direction": [
+        1,
+        -3,
+        -2
+      ],
+      "intensity": 0.4,
+      "color": [
+        0.8,
+        0.9,
+        1
+      ]
+    }
+  ]
+}
