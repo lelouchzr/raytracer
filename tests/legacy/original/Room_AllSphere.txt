@@ -1,0 +1,96 @@
+camera {
+    camera_position { X:478, Y:278, Z:-600, },
+    camera_direction { X:278, Y:278, Z:0, },
+    camera_fov:40,
+    camera_size: { width:800, height:400, },
+    end = true,
+},
+primitives {
+    plane {
+        coefficient { X:-400,Y:554,Z:147 }, { X0:1000,Y1:0,Z1:0 }, { X2:0,Y2:0,Z2:1000 },
+        material { color { r:7, g:7, b:7, } alpha:0, material_type:2,},
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+    plane {
+        coefficient { X:-400,Y:100,Z:0 }, { X0:1000,Y1:0,Z1:0 }, { X2:0,Y2:0,Z2:1000 },
+        material { color { r:0.1, g:0.2, b:0.1, } alpha:0, material_type:0,},
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+    sphere {
+        position { X:400, Y:400, Z:200, },
+        radius:50,
+        material { color { r:0.7, g:0.3, b:0.1, } alpha:0, material_type:0, },
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+    sphere {
+        position { X:0, Y:150, Z:145, },
+        radius:50,
+        material { color { r:0.8, g:0.8, b:0.9, } alpha:0, material_type:1, },
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+    sphere {
+        position { X:260, Y:150, Z:45, },
+        radius:50,
+        material { color { r:0.8, g:0.8, b:0.9, } alpha:0, material_type:5, },
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+    sphere {
+        position { X:220, Y:280, Z:300, },
+        radius:80,
+        material { color { r:0.8, g:0.8, b:0.9, } alpha:0, material_type:4, },
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+    sphere {
+        position { X:360, Y:190, Z:145, },
+        radius:70,
+        material { color { r:0.2, g:0.4, b:0.9, } alpha:0, material_type:1, },
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+    sphere {
+        position { X:360, Y:190, Z:145, },
+        radius:80,
+        material { color { r:0.2, g:0.4, b:0.9, } alpha:0, material_type:5, },
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+},
+light {
+    directional_light {
+        directional_light_color { R:0.5, G:0.5, B:0.5, },
+        end = true,
+    },
+    ambient_light {
+        ambient_light_color { R:0, G:0, B:0, },
+        end = true,
+    },
+},
+checker {
+    checker_color1 { R:0.0, G:0.0, B:0.0, }
+    checker_color2 { R:0.9, G:0.9, B:0.9, }
+    dielectric_value:1.5;
+    noise_value:0.2;
+    end = true,
+}

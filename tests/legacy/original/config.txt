@@ -1,0 +1,71 @@
+camera {
+    camera_position { X:0, Y:0, Z:5, },
+    camera_direction { X:0, Y:0, Z:-1, },
+    camera_fov:90,
+    camera_size: { width:800, height:600, },
+    end = true,
+},
+primitives {
+    sphere {
+        position { X:0, Y:0, Z:0, },
+        radius:0,
+        material { color { r:0, g:0, b:0, } alpha:0, material_type:1, },
+        translate { X:0, Y:0, Z:0, },
+        rotate { angle:0, },
+        scale { X:0, Y:0, Z:0, },
+        end = true,
+    },
+    plane {
+        coefficient { X:1,Y:1,Z:1 }, { X1:1,Y1:1,Z1:1 }, { X2:1,Y2:1,Z2:1 },
+        material { color { r:-1, g:-1, b:-1, } alpha:-1, material_type:1,},
+        translate { X:-1, Y:-1, Z:-1, },
+        rotate { angle:0, },
+        scale { X:-1, Y:-1, Z:-1, },
+        end = true,
+    },
+    cylinder {
+        position { X:1, Y:1, Z:1, X2:1, Y2:1, Z2:1, },
+        radius:1,
+        material { color { r:1, g:1, b:1, } alpha:1, material_type:1, },
+        translate { X:1, Y:1, Z:1, },
+        rotate { angle:0, },
+        scale { X:1, Y:1, Z:1, },
+        end = true,
+    },
+    cone {
+        position { X:-0.5, Y:-0.5, Z:-0.5,},
+        radius:-0.5,
+        height:0.5,
+        material { color { r:-0.5, g:-0.5, b:-0.5, } alpha:-0.5, material_type:1, },
+        translate { X:-0.5, Y:-0.5, Z:-0.5, },
+        rotate { angle:0, },
+        scale { X:-0.5, Y:-0.5, Z:-0.5, },
+        end = true,
+    },
+    sphere {
+        position { X:190, Y:90, Z:190, },
+        radius:90,
+        material { color { r:0.5, g:0.5, b:0.5, } alpha:0.5, material_type:1, },
+        translate { X:190, Y:90, Z:190, },
+        rotate { angle:0, },
+        scale { X:0.5, Y:0.5, Z:0.5, },
+        end = true,
+    },
+},
+light {
+    directional_light {
+        directional_light_color { R:0.5, G:0.5, B:0.5, },
+        end = true,
+    },
+    ambient_light {
+        ambient_light_color { R:0.5, G:0.5, B:0.5, },
+        end = true,
+    },
+},
+checker {
+    checker_color1 { R:1, G:-1, B:0.5, }
+    checker_color2 { R:-0.5, G:1, B:2, }
+    dielectric_value:2,
+    noise_value:2,
+    end = true,
+}
