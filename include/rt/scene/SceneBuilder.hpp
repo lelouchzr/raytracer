@@ -4,7 +4,7 @@
 
 namespace rt {
 class SceneBuilder {
-    [[maybe_unused]] bool preview_, deferLighting_;
+    bool preview_, deferLighting_;
     Factory factory_;
     Scene scene_;
     std::map<std::string, std::shared_ptr<const IMaterial>> materials_;
