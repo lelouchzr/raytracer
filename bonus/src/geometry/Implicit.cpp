@@ -47,7 +47,7 @@ Bounds Implicit::bounds() const {
 
 bool Implicit::intersect(const Ray &r, double lo, double hi, Hit &hit) const {
     if (type_ == "torus" || type_ == "tanglecube") {
-        std::vector<double> polynomial(5, 0);
+        std::array<double, 5> polynomial{};
         Vec3 o = r.origin, d = r.direction;
         if (type_ == "torus") {
             double a = d.length2(), b = 2 * dot(o, d),
@@ -66,7 +66,10 @@ bool Implicit::intersect(const Ray &r, double lo, double hi, Hit &hit) const {
                 polynomial[4] += b * b * b * b;
             }
         }
-        for (double root : Polynomial::roots(std::move(polynomial)))
+        Polynomial::RootBuffer roots;
+        const auto rootCount = Polynomial::roots(polynomial, roots);
+        for (std::size_t index = 0; index < rootCount; ++index) {
+            const double root = roots[index];
             if (root >= lo && root <= hi) {
                 Vec3 p = r.at(root), normal;
                 if (type_ == "torus") {
@@ -79,6 +82,7 @@ bool Implicit::intersect(const Ray &r, double lo, double hi, Hit &hit) const {
                 if (normal.length2() > 1e-20)
                     return finish(r, root, normal, lo, hi, hit);
             }
+        }
         return false;
     }
     auto box = bounds();

@@ -4,7 +4,8 @@
 
 namespace rt {
 class SceneBuilder {
-    bool preview_, deferLighting_;
+    bool preview_;
+    [[maybe_unused]] bool deferLighting_; // Used when optional lighting preparation is compiled.
     Factory factory_;
     Scene scene_;
     std::map<std::string, std::shared_ptr<const IMaterial>> materials_;

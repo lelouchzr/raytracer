@@ -51,6 +51,11 @@ std::pair<double, double> MediumStack::indices(const Hit &h, double ior) const {
     double incident = current();
     if (!h.front && media_.empty())
         incident = ior;
-    return {incident, cross(h, ior).current()};
+    if (h.front)
+        return {incident, ior};
+    // Removing a non-top or absent boundary leaves the current medium unchanged.
+    if (!media_.empty() && media_.back().first == h.boundary)
+        return {incident, media_.size() > 1 ? media_[media_.size() - 2].second : 1};
+    return {incident, current()};
 }
 } // namespace rt

@@ -61,13 +61,19 @@ Vec3 AdvancedIntegrator::radiance(const Scene &s, Ray ray, int depth, unsigned l
     Vec3 result = (emitted ? m.emission : Vec3{}) + direct * diffuse;
     if (photons_ && diffuse > 0)
         result += photons_->radiance(h.point, h.geometric, m.color, h.boundary) * diffuse;
-    auto [etaI, etaT] = media.indices(h, m.ior);
-    double eta = etaI / etaT, cosine = std::clamp(dot(-ray.direction, h.geometric), 0., 1.),
-           sin2 = eta * eta * (1 - cosine * cosine), r0 = (etaI - etaT) / (etaI + etaT);
-    r0 *= r0;
-    double fresnel = sin2 > 1 ? 1 : r0 + (1 - r0) * std::pow(1 - cosine, 5);
-    double reflected = m.reflection + m.transmission * fresnel,
-           transmitted = m.transmission * (1 - fresnel);
+    double eta = 1, cosine = 0, sin2 = 0;
+    double reflected = m.reflection, transmitted = 0;
+    if (m.transmission > 0) {
+        auto [etaI, etaT] = media.indices(h, m.ior);
+        eta = etaI / etaT;
+        cosine = std::clamp(dot(-ray.direction, h.geometric), 0., 1.);
+        sin2 = eta * eta * (1 - cosine * cosine);
+        double r0 = (etaI - etaT) / (etaI + etaT);
+        r0 *= r0;
+        double fresnel = sin2 > 1 ? 1 : r0 + (1 - r0) * std::pow(1 - cosine, 5);
+        reflected = m.reflection + m.transmission * fresnel;
+        transmitted = m.transmission * (1 - fresnel);
+    }
     Vec3 reflectionTint = Vec3{1, 1, 1} * (1 - m.metallic) + m.color * m.metallic,
          transmissionTint = Vec3{.8, .8, .8} + m.color * .2;
     auto bounce = [&](Vec3 direction, const MediumStack &next) {
