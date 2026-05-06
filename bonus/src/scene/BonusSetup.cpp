@@ -1,6 +1,7 @@
 #include "rt/Extensions.hpp"
 #include "rt/geometry/Implicit.hpp"
 #include "rt/geometry/Mobius.hpp"
+#include "rt/lights/Area.hpp"
 #include "rt/lights/Point.hpp"
 #include "rt/materials/AdvancedMaterial.hpp"
 #include "rt/render/AdvancedIntegrator.hpp"
@@ -13,6 +14,7 @@ void registerMaterials(Factory &f) {
         return std::make_shared<AdvancedMaterial>(j, base);
     };
     f.lights["point"] = [](const Json &j) { return std::make_shared<Point>(j); };
+    f.lights["area"] = [](const Json &j) { return std::make_shared<Area>(j); };
 }
 
 void registerBonus(Factory &f) {

@@ -11,6 +11,14 @@ LightSample LeaseLight::sample(Vec3 p) const {
     return light_->sample(p);
 }
 
+LightSample LeaseLight::sample(Vec3 p, unsigned long long &rng) const {
+    return light_->sample(p, rng);
+}
+
+bool LeaseLight::intersect(const Ray &ray, double lo, double &hi, Vec3 &emission) const {
+    return light_->intersect(ray, lo, hi, emission);
+}
+
 bool LeaseLight::emit(unsigned long long &rng, Ray &r, Vec3 &power) const {
     return light_->emit(rng, r, power);
 }

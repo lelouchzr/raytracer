@@ -22,7 +22,7 @@ Bounds PluginSphere::bounds() const {
 } // namespace rt
 
 extern "C" int raytracer_plugin_abi() {
-    return 1;
+    return 2;
 }
 
 extern "C" void raytracer_register(rt::Factory *factory) {

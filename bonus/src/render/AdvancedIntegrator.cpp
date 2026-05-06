@@ -21,7 +21,12 @@ Vec3 AdvancedIntegrator::radiance(const Scene &s, Ray ray, int depth, unsigned l
     if (depth >= s.settings.depth)
         return {};
     Hit h;
-    if (!s.intersect(ray, epsilon, infinity, h))
+    bool found = s.intersect(ray, epsilon, infinity, h);
+    double nearest = found ? h.t : infinity;
+    Vec3 emission;
+    if (intersectEmitter(s, ray, nearest, emission))
+        return emitted ? emission : Vec3{};
+    if (!found)
         return s.background;
     Surface m = h.material->sampleHit(h);
     Vec3 normal = h.material->shadingNormal(h), direct;
@@ -39,7 +44,7 @@ Vec3 AdvancedIntegrator::radiance(const Scene &s, Ray ray, int depth, unsigned l
         ao = .2 + .8 * double(visible) / s.settings.ao;
     }
     for (const auto &light : s.lights) {
-        auto l = light->sample(h.point);
+        auto l = light->sample(h.point, rng);
         if (l.ambient) {
             if (!path)
                 direct += m.color * l.radiance * ao;
@@ -49,7 +54,7 @@ Vec3 AdvancedIntegrator::radiance(const Scene &s, Ray ray, int depth, unsigned l
         if (cosine <= 0 || dot(h.geometric, l.direction) <= 0)
             continue;
         Vec3 trans = visibility(s, {h.point + h.geometric * epsilon, l.direction}, l.distance,
-                                s.settings.integrator == "whitted");
+                                s.settings.integrator == "whitted", light.get());
         double specular =
             path ? 0
                  : m.specular *
@@ -58,7 +63,8 @@ Vec3 AdvancedIntegrator::radiance(const Scene &s, Ray ray, int depth, unsigned l
         direct += (m.color * (path ? cosine / pi : cosine) + Vec3{specular, specular, specular}) *
                   l.radiance * trans;
     }
-    Vec3 result = (emitted ? m.emission : Vec3{}) + direct * diffuse;
+    // Material emitters are sampled by BSDF continuation only; registered area lights use NEE.
+    Vec3 result = m.emission + direct * diffuse;
     if (photons_ && diffuse > 0)
         result += photons_->radiance(h.point, h.geometric, m.color, h.boundary) * diffuse;
     double eta = 1, cosine = 0, sin2 = 0;
@@ -76,9 +82,8 @@ Vec3 AdvancedIntegrator::radiance(const Scene &s, Ray ray, int depth, unsigned l
     }
     Vec3 reflectionTint = Vec3{1, 1, 1} * (1 - m.metallic) + m.color * m.metallic,
          transmissionTint = Vec3{.8, .8, .8} + m.color * .2;
-    auto bounce = [&](Vec3 direction, const MediumStack &next) {
-        direction = unit(direction);
-        return radiance(s, {h.point + direction * epsilon, direction}, depth + 1, rng, next, true);
+    auto bounce = [&](Vec3 direction, const MediumStack &next, bool includeEmitter = true) {
+        return radiance(s, spawnRay(h, direction), depth + 1, rng, next, includeEmitter);
     };
     if (path) {
         double choice = random01(rng);
@@ -95,7 +100,7 @@ Vec3 AdvancedIntegrator::radiance(const Scene &s, Ray ray, int depth, unsigned l
         } else if (diffuse > 0) {
             Vec3 direction = hemisphere(normal, rng);
             if (dot(direction, h.geometric) > 0)
-                result += bounce(direction, media) * m.color / survive;
+                result += bounce(direction, media, false) * m.color / survive;
         }
     } else {
         if (reflected > 0)

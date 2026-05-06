@@ -38,9 +38,14 @@ with tempfile.TemporaryDirectory(prefix='raytracer-systems-') as folder:
     def save(scene): config.write_text(json.dumps(scene))
     save(template)
     run([config])
+    invalid_tone = json.loads(json.dumps(template))
+    invalid_tone['render']['toneMap'] = 'unknown'
+    save(invalid_tone)
+    run([config],84)
+    save(template)
     run(['--gui','--frames','2junk',config],84)
     run(['--preview',config])
-    for name in ('torus','tanglecube','fractal','mobius','scenegraph','global_illumination','caustics','nested_media','adaptive','normal_perlin','plugin'):
+    for name in ('torus','tanglecube','fractal','mobius','scenegraph','global_illumination','caustics','nested_media','adaptive','normal_perlin','plugin','subject_reference','soft_shadows'):
         path=root/'bonus/scenes'/f'{name}.json'
         scene=json.loads(path.read_text())
         scene['render'].update(width=40,height=24,samples=3,ao=0,output=str(output))

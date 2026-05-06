@@ -1,0 +1,98 @@
+{
+  "camera": {
+    "position": [
+      0,
+      3.2,
+      7
+    ],
+    "target": [
+      0,
+      0.8,
+      0
+    ],
+    "fov": 40
+  },
+  "render": {
+    "width": 640,
+    "height": 400,
+    "samples": 64,
+    "threads": 0,
+    "depth": 5,
+    "integrator": "path",
+    "output": "bonus/quality/nee.ppm"
+  },
+  "background": [
+    0,
+    0,
+    0
+  ],
+  "materials": {
+    "white": {
+      "type": "phong",
+      "color": [
+        0.75,
+        0.75,
+        0.75
+      ],
+      "specular": 0
+    },
+    "blue": {
+      "type": "phong",
+      "color": [
+        0.04,
+        0.16,
+        0.65
+      ],
+      "specular": 0
+    },
+    "emitter": {
+      "type": "phong",
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "emission": [
+        16,
+        16,
+        16
+      ]
+    }
+  },
+  "objects": [
+    {
+      "type": "plane",
+      "material": "white"
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0,
+        1,
+        0
+      ]
+    }
+  ],
+  "lights": [
+    {
+      "type": "area",
+      "position": [
+        -2,
+        5,
+        2
+      ],
+      "u": [
+        1.5,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        0,
+        1.5
+      ],
+      "intensity": 16
+    }
+  ]
+}

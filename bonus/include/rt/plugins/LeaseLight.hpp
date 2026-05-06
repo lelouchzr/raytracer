@@ -10,6 +10,8 @@ class LeaseLight final : public ILight {
   public:
     LeaseLight(std::shared_ptr<SharedLibrary>, std::shared_ptr<const ILight>);
     LightSample sample(Vec3) const override;
+    LightSample sample(Vec3, unsigned long long &) const override;
+    bool intersect(const Ray &, double, double &, Vec3 &) const override;
     bool emit(unsigned long long &, Ray &, Vec3 &) const override;
 };
 } // namespace rt

@@ -56,7 +56,8 @@ void RowRenderer::row(int y, RenderControl &control) const {
             break;
         total += static_cast<unsigned>(count);
         Vec3 c = sum * (s.exposure / count);
-        row[static_cast<std::size_t>(x)] = {c.x / (1 + c.x), c.y / (1 + c.y), c.z / (1 + c.z)};
+        row[static_cast<std::size_t>(x)] =
+            s.toneMap == "none" ? c : Vec3{c.x / (1 + c.x), c.y / (1 + c.y), c.z / (1 + c.z)};
     }
     if (!control.cancelled())
         control.publish(y, row, total);

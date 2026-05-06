@@ -72,7 +72,7 @@ void SceneBuilder::append(const std::filesystem::path &file,
 #ifdef RT_BONUS
                  ,
                  "samples", "depth", "threads", "ao", "exposure", "integrator", "photons",
-                 "photonRadius", "adaptive", "minSamples"
+                 "photonRadius", "adaptive", "minSamples", "toneMap"
 #endif
                 });
         auto &s = scene_.settings;
@@ -85,6 +85,9 @@ void SceneBuilder::append(const std::filesystem::path &file,
         s.threads = integer(r.number("threads", 0), 0, 256, "threads");
         s.ao = integer(r.number("ao", 0), 0, 128, "ao");
         s.exposure = range(r.number("exposure", 1), .01, 100, "exposure");
+        s.toneMap = r.string("toneMap", "reinhard");
+        if (s.toneMap != "reinhard" && s.toneMap != "none")
+            throw std::runtime_error("toneMap must be reinhard or none");
         s.integrator = r.string("integrator", "whitted");
         if (s.integrator != "whitted" && s.integrator != "path" && s.integrator != "photon")
             throw std::runtime_error("integrator must be whitted, path or photon");

@@ -17,7 +17,7 @@ PhotonMap::PhotonMap(const Scene &scene, const RenderControl *control)
             emitters.push_back(light);
     }
     if (emitters.empty())
-        throw std::runtime_error("photon mapping requires a point emitter");
+        throw std::runtime_error("photon mapping requires a point or area emitter");
     for (int photon = 0; photon < scene.settings.photons; ++photon) {
         if (control && control->cancelled())
             break;
@@ -31,6 +31,10 @@ PhotonMap::PhotonMap(const Scene &scene, const RenderControl *control)
         for (int bounce = 0; bounce < scene.settings.depth; ++bounce) {
             Hit hit;
             if (!scene.intersect(ray, epsilon, infinity, hit))
+                break;
+            double nearest = hit.t;
+            Vec3 emission;
+            if (intersectEmitter(scene, ray, nearest, emission))
                 break;
             Surface material = hit.material->sampleHit(hit);
             double diffuse = 1 - material.reflection - material.transmission;
@@ -61,8 +65,7 @@ PhotonMap::PhotonMap(const Scene &scene, const RenderControl *control)
             } else
                 break;
             specularChain = true;
-            direction = unit(direction);
-            ray = {hit.point + direction * epsilon, direction};
+            ray = spawnRay(hit, direction);
         }
     }
     for (std::size_t i = 0; i < photons_.size(); ++i)

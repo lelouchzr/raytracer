@@ -13,9 +13,9 @@
     "fov": 43
   },
   "render": {
-    "width": 640,
-    "height": 400,
-    "samples": 24,
+    "width": 1280,
+    "height": 800,
+    "samples": 64,
     "ao": 0,
     "threads": 0,
     "depth": 9,
