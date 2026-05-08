@@ -1,0 +1,17 @@
+Film "image" "integer xresolution" [16] "integer yresolution" [16] "string filename" ["pbrt-diffuse.pfm"]
+PixelFilter "box" "float xwidth" [.5] "float ywidth" [.5]
+Sampler "sobol" "integer pixelsamples" [4096]
+Integrator "path" "integer maxdepth" [5]
+LookAt 0 1 0   0 0 0   0 0 1
+Camera "perspective" "float fov" [1]
+WorldBegin
+AttributeBegin
+Material "matte" "rgb Kd" [.6 .6 .6]
+Shape "trianglemesh" "point P" [-1000 0 -1000 1000 0 -1000 1000 0 1000 -1000 0 1000] "integer indices" [0 2 1 0 3 2]
+AttributeEnd
+AttributeBegin
+AreaLightSource "diffuse" "rgb L" [3 3 3]
+Material "matte" "rgb Kd" [0 0 0]
+Shape "trianglemesh" "point P" [-1 2 -1 1 2 -1 1 2 1 -1 2 1] "integer indices" [0 1 2 0 2 3]
+AttributeEnd
+WorldEnd

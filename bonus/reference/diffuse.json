@@ -1,0 +1,73 @@
+{
+  "camera": {
+    "position": [
+      0,
+      1,
+      0
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ],
+    "up": [
+      0,
+      0,
+      1
+    ],
+    "fov": 1
+  },
+  "render": {
+    "width": 16,
+    "height": 16,
+    "samples": 4096,
+    "threads": 1,
+    "depth": 5,
+    "integrator": "pbr",
+    "output": "raytracer-diffuse.pfm"
+  },
+  "background": [
+    0,
+    0,
+    0
+  ],
+  "materials": {
+    "matte": {
+      "type": "pbr",
+      "color": [
+        0.6,
+        0.6,
+        0.6
+      ],
+      "ior": 1,
+      "roughness": 1
+    }
+  },
+  "objects": [
+    {
+      "type": "plane",
+      "material": "matte"
+    }
+  ],
+  "lights": [
+    {
+      "type": "area",
+      "position": [
+        0,
+        2,
+        0
+      ],
+      "u": [
+        2,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        0,
+        2
+      ],
+      "intensity": 3
+    }
+  ]
+}
