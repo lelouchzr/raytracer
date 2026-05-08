@@ -5,7 +5,7 @@
 
 namespace rt {
 MediumStack MediumStack::atOrigin(const Scene &scene, Vec3 origin) {
-    std::vector<std::tuple<double, const void *, double>> enclosing;
+    std::vector<std::tuple<double, const void *, double, Vec3>> enclosing;
     std::set<const void *> seen;
     Ray probe{origin, unit({.314159, .271828, .618034})};
     double distance = 0;
@@ -16,31 +16,38 @@ MediumStack MediumStack::atOrigin(const Scene &scene, Vec3 origin) {
         distance += h.t;
         Surface material = h.material->sampleHit(h);
         if (seen.insert(h.boundary).second && !h.front && material.transmission > 0)
-            enclosing.emplace_back(distance, h.boundary, material.ior);
+            enclosing.emplace_back(distance, h.boundary, material.ior, material.absorption);
         probe.origin = h.point + probe.direction * epsilon;
         distance += epsilon;
     }
     std::sort(enclosing.begin(), enclosing.end(),
               [](const auto &a, const auto &b) { return std::get<0>(a) > std::get<0>(b); });
     MediumStack stack;
-    for (auto [distanceToExit, boundary, ior] : enclosing) {
+    for (auto [distanceToExit, boundary, ior, absorption] : enclosing) {
         (void)distanceToExit;
-        stack.media_.emplace_back(boundary, ior);
+        stack.media_.push_back({boundary, ior, absorption});
     }
     return stack;
 }
 
-double MediumStack::current() const {
-    return media_.empty() ? 1 : media_.back().second;
+Vec3 MediumStack::transmittance(double distance) const {
+    Vec3 sigma = media_.empty() ? Vec3{} : media_.back().absorption;
+    return {sigma.x > 0 ? std::exp(-sigma.x * distance) : 1,
+            sigma.y > 0 ? std::exp(-sigma.y * distance) : 1,
+            sigma.z > 0 ? std::exp(-sigma.z * distance) : 1};
 }
 
-MediumStack MediumStack::cross(const Hit &h, double ior) const {
+double MediumStack::current() const {
+    return media_.empty() ? 1 : media_.back().ior;
+}
+
+MediumStack MediumStack::cross(const Hit &h, double ior, Vec3 absorption) const {
     auto next = *this;
     if (h.front)
-        next.media_.emplace_back(h.boundary, ior);
+        next.media_.push_back({h.boundary, ior, absorption});
     else
         for (auto it = next.media_.rbegin(); it != next.media_.rend(); ++it)
-            if (it->first == h.boundary) {
+            if (it->boundary == h.boundary) {
                 next.media_.erase(std::next(it).base());
                 break;
             }
@@ -54,8 +61,8 @@ std::pair<double, double> MediumStack::indices(const Hit &h, double ior) const {
     if (h.front)
         return {incident, ior};
     // Removing a non-top or absent boundary leaves the current medium unchanged.
-    if (!media_.empty() && media_.back().first == h.boundary)
-        return {incident, media_.size() > 1 ? media_[media_.size() - 2].second : 1};
+    if (!media_.empty() && media_.back().boundary == h.boundary)
+        return {incident, media_.size() > 1 ? media_[media_.size() - 2].ior : 1};
     return {incident, current()};
 }
 } // namespace rt

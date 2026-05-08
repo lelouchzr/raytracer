@@ -5,13 +5,20 @@
 namespace rt {
 struct Scene;
 
+struct Medium {
+    const void *boundary;
+    double ior;
+    Vec3 absorption;
+};
+
 class MediumStack {
-    std::vector<std::pair<const void *, double>> media_;
+    std::vector<Medium> media_;
 
   public:
     static MediumStack atOrigin(const Scene &, Vec3);
     double current() const;
-    MediumStack cross(const Hit &, double ior) const;
+    MediumStack cross(const Hit &, double ior, Vec3 absorption = {}) const;
+    Vec3 transmittance(double distance) const;
     std::pair<double, double> indices(const Hit &, double ior) const;
 };
 } // namespace rt

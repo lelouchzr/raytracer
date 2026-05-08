@@ -1,5 +1,5 @@
 extern "C" int raytracer_plugin_abi() {
-    return 1;
+    return 2;
 }
 
 extern "C" void raytracer_register(void *) {}

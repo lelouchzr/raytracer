@@ -10,8 +10,8 @@ void PluginLoader::load(Factory &factory, const std::filesystem::path &path) {
         return;
     auto library = std::make_shared<SharedLibrary>(canonical);
     auto abi = reinterpret_cast<int (*)()>(library->symbol("raytracer_plugin_abi"));
-    if (abi() != 2)
-        throw std::runtime_error("incompatible raytracer plugin ABI (expected 2)");
+    if (abi() != 3)
+        throw std::runtime_error("incompatible raytracer plugin ABI (expected 3)");
     auto oldShapes = factory.shapes;
     auto oldMaterials = factory.materials;
     auto oldLights = factory.lights;

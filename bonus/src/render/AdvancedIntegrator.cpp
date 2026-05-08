@@ -27,7 +27,8 @@ Vec3 AdvancedIntegrator::radiance(const Scene &s, Ray ray, int depth, unsigned l
     if (intersectEmitter(s, ray, nearest, emission))
         return emitted ? emission : Vec3{};
     if (!found)
-        return s.background;
+        return s.environmentLight ? s.environmentLight->environment(ray.direction) : s.background;
+    prepareFootprint(ray, h);
     Surface m = h.material->sampleHit(h);
     Vec3 normal = h.material->shadingNormal(h), direct;
     double diffuse = 1 - m.reflection - m.transmission;

@@ -1,5 +1,6 @@
 #include "rt/render/RowRenderer.hpp"
 #include "rt/Extensions.hpp"
+#include "rt/math/Color.hpp"
 #include <atomic>
 #include <numeric>
 #include <thread>
@@ -39,7 +40,10 @@ void RowRenderer::row(int y, RenderControl &control) const {
                 dx = random01(rng);
                 dy = random01(rng);
             }
-            Vec3 value = scene_.integrator->trace(scene_, camera_.ray(x + dx, y + dy), 0, rng);
+            Ray ray = camera_.ray(x + dx, y + dy);
+            ray.coneSpread =
+                std::max(std::sqrt(camera_.stepX.length2()), std::sqrt(camera_.stepY.length2()));
+            Vec3 value = scene_.integrator->trace(scene_, ray, 0, rng);
             sum += value;
             ++count;
             Vec3 delta = value - mean;
@@ -55,9 +59,9 @@ void RowRenderer::row(int y, RenderControl &control) const {
         if (count == 0)
             break;
         total += static_cast<unsigned>(count);
-        Vec3 c = sum * (s.exposure / count);
-        row[static_cast<std::size_t>(x)] =
-            s.toneMap == "none" ? c : Vec3{c.x / (1 + c.x), c.y / (1 + c.y), c.z / (1 + c.z)};
+        bool hdr = std::filesystem::path(s.output).extension() == ".pfm";
+        Vec3 c = sum * ((hdr ? 1 : s.exposure) / count);
+        row[static_cast<std::size_t>(x)] = hdr ? c : toneMap(c, s.toneMap);
     }
     if (!control.cancelled())
         control.publish(y, row, total);

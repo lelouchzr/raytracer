@@ -14,6 +14,7 @@ bool Shape::finish(Ray r, double t, Vec3 normal, double lo, double hi, Hit &h) c
     h.normal = h.front ? unit(normal) : -unit(normal);
     h.geometric = h.normal;
     h.hasUV = false;
+    h.textureScale = 1;
     h.boundary = this;
     h.tangent = unit(cross(std::abs(h.normal.y) < .9 ? Vec3{0, 1, 0} : Vec3{1, 0, 0}, h.normal));
     h.bitangent = cross(h.normal, h.tangent);

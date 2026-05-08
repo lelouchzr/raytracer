@@ -39,7 +39,11 @@ bool Triangle::intersect(const Ray &ray, double lo, double hi, Hit &h) const {
         Vec3 a = uvs_[1] - uvs_[0], b = uvs_[2] - uvs_[0];
         double determinant = a.x * b.y - a.y * b.x;
         if (std::abs(determinant) > 1e-12) {
-            h.tangent = unit((e1 * b.y - e2 * a.y) / determinant);
+            Vec3 dpdu = (e1 * b.y - e2 * a.y) / determinant;
+            Vec3 dpdv = (e2 * a.x - e1 * b.x) / determinant;
+            h.textureScale =
+                1 / std::max(1e-8, std::min(std::sqrt(dpdu.length2()), std::sqrt(dpdv.length2())));
+            h.tangent = unit(dpdu);
             h.bitangent = unit((e2 * a.x - e1 * b.x) / determinant);
         }
     }

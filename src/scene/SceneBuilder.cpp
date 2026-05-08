@@ -1,6 +1,7 @@
 #ifdef RT_BONUS
 #include "rt/acceleration/Composite.hpp"
 #include "rt/io/SceneAdapter.hpp"
+#include "rt/lights/Environment.hpp"
 #include "rt/plugins/PluginLoader.hpp"
 #include "rt/transform/AffineTransform.hpp"
 #endif
@@ -43,7 +44,7 @@ void SceneBuilder::append(const std::filesystem::path &file,
     keys(j, {"camera", "render", "background", "materials", "objects", "lights"
 #ifdef RT_BONUS
              ,
-             "include", "plugins"
+             "include", "plugins", "environment"
 #endif
             });
     stack.push_back(absolute);
@@ -72,7 +73,7 @@ void SceneBuilder::append(const std::filesystem::path &file,
 #ifdef RT_BONUS
                  ,
                  "samples", "depth", "threads", "ao", "exposure", "integrator", "photons",
-                 "photonRadius", "adaptive", "minSamples", "toneMap"
+                 "photonRadius", "adaptive", "minSamples", "toneMap", "colorSpace"
 #endif
                 });
         auto &s = scene_.settings;
@@ -86,11 +87,15 @@ void SceneBuilder::append(const std::filesystem::path &file,
         s.ao = integer(r.number("ao", 0), 0, 128, "ao");
         s.exposure = range(r.number("exposure", 1), .01, 100, "exposure");
         s.toneMap = r.string("toneMap", "reinhard");
-        if (s.toneMap != "reinhard" && s.toneMap != "none")
-            throw std::runtime_error("toneMap must be reinhard or none");
+        if (s.toneMap != "reinhard" && s.toneMap != "none" && s.toneMap != "neutral")
+            throw std::runtime_error("toneMap must be reinhard, neutral or none");
         s.integrator = r.string("integrator", "whitted");
-        if (s.integrator != "whitted" && s.integrator != "path" && s.integrator != "photon")
-            throw std::runtime_error("integrator must be whitted, path or photon");
+        if (s.integrator != "whitted" && s.integrator != "path" && s.integrator != "photon" &&
+            s.integrator != "pbr")
+            throw std::runtime_error("integrator must be whitted, path, photon or pbr");
+        s.colorSpace = r.string("colorSpace", s.integrator == "pbr" ? "srgb" : "gamma2");
+        if (s.colorSpace != "srgb" && s.colorSpace != "gamma2")
+            throw std::runtime_error("colorSpace must be srgb or gamma2");
         s.photons = integer(r.number("photons", 0), 0, 2000000, "photons");
         s.photonRadius = range(r.number("photonRadius", .3), .001, 10, "photon radius");
         s.adaptive = range(r.number("adaptive", 0), 0, 1, "adaptive threshold");
@@ -101,6 +106,15 @@ void SceneBuilder::append(const std::filesystem::path &file,
         if (s.output.empty())
             throw std::runtime_error("output path is empty");
     }
+#ifdef RT_BONUS
+    if (j.has("environment")) {
+        if (scene_.environmentLight)
+            std::erase(scene_.lights, scene_.environmentLight);
+        scene_.environmentLight =
+            std::make_shared<Environment>(j.at("environment"), absolute.parent_path());
+        scene_.lights.push_back(scene_.environmentLight);
+    }
+#endif
     if (j.has("materials"))
         for (const auto &[name, m] : j.at("materials").object()) {
             if (materials_.count(name))

@@ -8,6 +8,8 @@ class ILight {
     virtual LightSample sample(Vec3) const = 0;
     virtual LightSample sample(Vec3, unsigned long long &) const;
     virtual bool intersect(const Ray &, double, double &, Vec3 &) const;
+    virtual double directionPdf(Vec3, Vec3) const;
+    virtual Vec3 environment(Vec3) const;
     virtual bool emit(unsigned long long &, Ray &, Vec3 &) const;
 };
 } // namespace rt

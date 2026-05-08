@@ -16,6 +16,7 @@ struct Scene {
     std::vector<std::shared_ptr<const ILight>> lights;
     std::shared_ptr<const IIntegrator> integrator;
     Primitive acceleration;
+    std::shared_ptr<const ILight> environmentLight;
     bool intersect(Ray, double lo, double hi, Hit &) const;
 };
 } // namespace rt

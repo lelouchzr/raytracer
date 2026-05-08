@@ -45,7 +45,7 @@ with tempfile.TemporaryDirectory(prefix='raytracer-systems-') as folder:
     save(template)
     run(['--gui','--frames','2junk',config],84)
     run(['--preview',config])
-    for name in ('torus','tanglecube','fractal','mobius','scenegraph','global_illumination','caustics','nested_media','adaptive','normal_perlin','plugin','subject_reference','soft_shadows'):
+    for name in ('torus','tanglecube','fractal','mobius','scenegraph','global_illumination','caustics','nested_media','adaptive','normal_perlin','plugin','subject_reference','soft_shadows','pbr_studio'):
         path=root/'bonus/scenes'/f'{name}.json'
         scene=json.loads(path.read_text())
         scene['render'].update(width=40,height=24,samples=3,ao=0,output=str(output))
@@ -53,6 +53,7 @@ with tempfile.TemporaryDirectory(prefix='raytracer-systems-') as folder:
         for mat in scene.get('materials',{}).values():
             for key in ('file','normalFile'):
                 if key in mat:mat[key]=str((path.parent/mat[key]).resolve())
+        if 'environment' in scene:scene['environment']['file']=str((path.parent/scene['environment']['file']).resolve())
         if 'plugins' in scene:scene['plugins']=[str(Path(sys.argv[4]).resolve())]
         save(scene)
         run([config])
@@ -115,6 +116,17 @@ with tempfile.TemporaryDirectory(prefix='raytracer-systems-') as folder:
         endpoints=','.join(f'127.0.0.1:{p}' for p in ports)
         run(['--cluster',endpoints,config],cwd=folder)
         assert output.read_bytes()==expected,'distributed render differs from local render'
+        # The physical integrator, environment sampling and MIS remain pixel deterministic.
+        physical=json.loads(json.dumps(template))
+        physical['render'].update(width=48,height=48,samples=7,threads=1,integrator='pbr')
+        (folder/'environment.hdr').write_bytes((root/'bonus/assets/studio.hdr').read_bytes())
+        physical['environment']={'file':str(folder/'environment.hdr'),'intensity':.5}
+        physical['materials']['coral']={'type':'pbr','color':[.7,.04,.02],'roughness':.35}
+        save(physical)
+        run([config])
+        physical_expected=output.read_bytes()
+        run(['--cluster',endpoints,config],cwd=folder)
+        assert output.read_bytes()==physical_expected,'physical distributed render differs from local'
         # Scene/mesh suffixes cannot bypass resource confinement.
         (folder/'unsafe.scene').write_text(json.dumps({'include':[str(source)]}))
         (folder/'unsafe.mesh').write_text('mtllib '+str(root/'tests/legacy/subject.cfg')+'\n')

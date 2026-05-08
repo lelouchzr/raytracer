@@ -12,6 +12,7 @@ class RenderControl {
     std::atomic<int> rows_{0};
     std::atomic<unsigned long long> samples_{0};
     int width_;
+    std::vector<unsigned char> completed_;
 
   public:
     RenderControl(int width, int height);
@@ -19,6 +20,7 @@ class RenderControl {
     bool cancelled() const;
     void publish(int row, const std::vector<Vec3> &, unsigned long long samples);
     std::vector<Vec3> snapshot() const;
+    std::vector<unsigned char> completedRows() const;
     int rows() const;
     unsigned long long samples() const;
 };

@@ -1,5 +1,9 @@
 #include "rt/engine.hpp"
+#include "rt/math/Color.hpp"
 #include "rt/render/BasicIntegrator.hpp"
+#ifdef RT_BONUS
+#include "rt/io/Hdr.hpp"
+#endif
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -11,6 +15,12 @@ std::shared_ptr<const IIntegrator> basicIntegrator() {
 }
 
 void writePpm(const Scene &s, const std::vector<Vec3> &pixels) {
+#ifdef RT_BONUS
+    if (std::filesystem::path(s.settings.output).extension() == ".pfm") {
+        writePfm(s, pixels);
+        return;
+    }
+#endif
     const std::filesystem::path output = s.settings.output;
     const auto temporary =
         output.string() + ".tmp." +
@@ -27,7 +37,7 @@ void writePpm(const Scene &s, const std::vector<Vec3> &pixels) {
                     throw std::runtime_error("non-finite rendered color");
                 // Gamma conversion is applied once, after all linear-light samples.
                 unsigned char v =
-                    static_cast<unsigned char>(255 * std::sqrt(std::clamp(c, 0., 1.)) + .5);
+                    static_cast<unsigned char>(255 * displayChannel(c, s.settings.colorSpace) + .5);
                 stream.put(static_cast<char>(v));
             }
         stream.flush();

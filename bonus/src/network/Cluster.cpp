@@ -48,7 +48,7 @@ void transferColors(const Socket &socket, std::vector<Vec3> &pixels, int width, 
                 for (int b = 0; b < 8; ++b)
                     bits = (bits << 8) | bytes[i * 24 + static_cast<std::size_t>(c * 8 + b)];
                 colors[c] = std::bit_cast<double>(bits);
-                if (!std::isfinite(colors[c]) || colors[c] < 0 || colors[c] > 1)
+                if (!std::isfinite(colors[c]) || colors[c] < 0)
                     throw std::runtime_error("invalid worker pixel");
             }
             pixels[first + i] = {colors[0], colors[1], colors[2]};

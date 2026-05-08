@@ -1,4 +1,5 @@
 #include "rt/display/ProgressiveViewer.hpp"
+#include "rt/math/Color.hpp"
 #include "rt/render/AdvancedIntegrator.hpp"
 #include "rt/render/RowRenderer.hpp"
 #include <chrono>
@@ -133,9 +134,12 @@ void ProgressiveViewer::run(const std::filesystem::path &file, bool watch, bool 
             auto pixels = control->snapshot();
             std::vector<std::uint8_t> rgba(pixels.size() * 4);
             for (std::size_t i = 0; i < pixels.size(); ++i) {
+                Vec3 color = pixels[i];
+                if (std::filesystem::path(scene.settings.output).extension() == ".pfm")
+                    color = toneMap(color * scene.settings.exposure, scene.settings.toneMap);
                 for (int c = 0; c < 3; ++c)
                     rgba[i * 4 + static_cast<std::size_t>(c)] = static_cast<std::uint8_t>(
-                        255 * std::sqrt(std::clamp(pixels[i][c], 0., 1.)) + .5);
+                        255 * displayChannel(color[c], scene.settings.colorSpace) + .5);
                 rgba[i * 4 + 3] = 255;
             }
             texture.update(rgba.data());

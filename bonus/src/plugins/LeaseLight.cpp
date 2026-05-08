@@ -19,6 +19,14 @@ bool LeaseLight::intersect(const Ray &ray, double lo, double &hi, Vec3 &emission
     return light_->intersect(ray, lo, hi, emission);
 }
 
+double LeaseLight::directionPdf(Vec3 p, Vec3 d) const {
+    return light_->directionPdf(p, d);
+}
+
+Vec3 LeaseLight::environment(Vec3 d) const {
+    return light_->environment(d);
+}
+
 bool LeaseLight::emit(unsigned long long &rng, Ray &r, Vec3 &power) const {
     return light_->emit(rng, r, power);
 }

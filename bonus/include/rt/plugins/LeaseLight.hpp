@@ -12,6 +12,8 @@ class LeaseLight final : public ILight {
     LightSample sample(Vec3) const override;
     LightSample sample(Vec3, unsigned long long &) const override;
     bool intersect(const Ray &, double, double &, Vec3 &) const override;
+    double directionPdf(Vec3, Vec3) const override;
+    Vec3 environment(Vec3) const override;
     bool emit(unsigned long long &, Ray &, Vec3 &) const override;
 };
 } // namespace rt

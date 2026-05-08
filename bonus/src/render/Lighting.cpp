@@ -9,10 +9,16 @@ Vec3 hemisphere(Vec3 n, unsigned long long &rng) {
            n * std::sqrt(1 - r * r);
 }
 
+void prepareFootprint(const Ray &ray, Hit &hit) {
+    double cosine = std::max(.02, std::abs(dot(ray.direction, hit.geometric)));
+    hit.footprint = (ray.coneWidth + ray.coneSpread * hit.t) / cosine;
+    hit.coneSpread = ray.coneSpread;
+}
+
 Ray spawnRay(const Hit &hit, Vec3 direction) {
     direction = unit(direction);
     Vec3 offset = hit.geometric * (dot(direction, hit.geometric) >= 0 ? epsilon : -epsilon);
-    return {hit.point + offset, direction};
+    return {hit.point + offset, direction, hit.footprint, hit.coneSpread};
 }
 
 bool intersectEmitter(const Scene &s, const Ray &ray, double &distance, Vec3 &emission,

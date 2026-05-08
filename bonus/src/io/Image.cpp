@@ -1,5 +1,7 @@
 #include "rt/io/Image.hpp"
+#include "rt/io/Hdr.hpp"
 #include "rt/json.hpp"
+#include "rt/math/Color.hpp"
 #include <cctype>
 #include <fstream>
 
@@ -16,6 +18,10 @@ Image::Image(const std::filesystem::path &path, bool linearize) {
     std::vector<unsigned char> data(static_cast<std::size_t>(size));
     if (!input.read(reinterpret_cast<char *>(data.data()), size))
         throw std::runtime_error("image read failure");
+    if (decodeRadiance(data, width_, height_, pixels_)) {
+        buildMips();
+        return;
+    }
     auto byte = [&](std::size_t i) -> unsigned {
         if (i >= data.size())
             throw std::runtime_error("truncated image");
@@ -32,7 +38,9 @@ Image::Image(const std::filesystem::path &path, bool linearize) {
             throw std::runtime_error("image too large");
         pixels_.resize(static_cast<std::size_t>(w) * static_cast<std::size_t>(h));
     };
-    auto store = [&](std::size_t index, Vec3 c) { pixels_.at(index) = linearize ? c * c : c; };
+    auto store = [&](std::size_t index, Vec3 c) {
+        pixels_.at(index) = linearize ? Vec3{srgbDecode(c.x), srgbDecode(c.y), srgbDecode(c.z)} : c;
+    };
     if (data.size() >= 2 && data[0] == 'P' && (data[1] == '3' || data[1] == '6')) {
         bool binary = data[1] == '6';
         std::size_t cursor = 2;
@@ -168,6 +176,7 @@ Image::Image(const std::filesystem::path &path, bool linearize) {
                     write(color());
         }
     }
+    buildMips();
 }
 
 int Image::width() const {
@@ -178,14 +187,4 @@ int Image::height() const {
     return height_;
 }
 
-Vec3 Image::sample(double u, double v) const {
-    if (!std::isfinite(u) || !std::isfinite(v))
-        throw std::runtime_error("non-finite texture coordinates");
-    u -= std::floor(u);
-    v -= std::floor(v);
-    int x = std::clamp(static_cast<int>(u * width_), 0, width_ - 1),
-        y = std::clamp(static_cast<int>(v * height_), 0, height_ - 1);
-    return pixels_[static_cast<std::size_t>(y) * static_cast<std::size_t>(width_) +
-                   static_cast<std::size_t>(x)];
-}
 } // namespace rt

@@ -18,6 +18,7 @@ class Json {
     explicit Json(Array);
     explicit Json(Object);
     static Json parse(const std::string &text);
+    std::string dump() const;
     const Object &object() const;
     const Array &array() const;
     const Json &at(const std::string &key) const;

@@ -30,7 +30,8 @@ LightSample Area::towards(Vec3 point, Vec3 target) const {
     double cosine = dot(normal_, -direction);
     cosine = twoSided_ ? std::abs(cosine) : std::max(0., cosine);
     // Uniform area density 1/A converted to solid angle: p(w) = r² / (A cosLight).
-    return {direction, radiance_ * (area_ * cosine / distance2), distance, false};
+    return {direction, radiance_ * (area_ * cosine / distance2), distance, false,
+            cosine > 0 ? distance2 / (area_ * cosine) : 0};
 }
 
 LightSample Area::sample(Vec3 point) const {
@@ -59,6 +60,16 @@ bool Area::intersect(const Ray &ray, double lo, double &hi, Vec3 &emission) cons
     // The unlit back is still an opaque surface.
     emission = twoSided_ || denominator < 0 ? radiance_ : Vec3{};
     return true;
+}
+
+double Area::directionPdf(Vec3 point, Vec3 direction) const {
+    double distance = infinity;
+    Vec3 emission;
+    if (!intersect({point, direction}, epsilon, distance, emission))
+        return 0;
+    double cosine = dot(normal_, -direction);
+    cosine = twoSided_ ? std::abs(cosine) : std::max(0., cosine);
+    return cosine > 0 ? distance * distance / (area_ * cosine) : 0;
 }
 
 bool Area::emit(unsigned long long &rng, Ray &ray, Vec3 &power) const {

@@ -9,6 +9,9 @@ bool AffineTransform::intersect(const Ray &ray, double lo, double hi, Hit &hit) 
     if (!child_->intersect({inverse_.point(ray.origin), inverse_.vector(ray.direction)}, lo, hi,
                            hit))
         return false;
+    hit.textureScale *= std::max({std::sqrt(inverse_.vector({1, 0, 0}).length2()),
+                                  std::sqrt(inverse_.vector({0, 1, 0}).length2()),
+                                  std::sqrt(inverse_.vector({0, 0, 1}).length2())});
     hit.point = ray.at(hit.t);
     hit.normal = inverse_.normal(hit.normal);
     hit.geometric = inverse_.normal(hit.geometric);
