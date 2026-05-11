@@ -4,3 +4,6 @@
 *.pfm binary
 *.hdr binary
 *.jpg binary
+
+# Keep upstream GUI sources distinct from the remake in GitHub's language statistics.
+bonus/vendor/** linguist-vendored
