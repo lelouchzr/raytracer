@@ -4,12 +4,14 @@
 #ifdef RT_BONUS
 #include "rt/display/ProgressiveViewer.hpp"
 #include "rt/network/Cluster.hpp"
+#include "rt/studio/NativeStudio.hpp"
 #endif
 namespace {
 void usage() {
     std::cout << "USAGE: ./raytracer <SCENE_FILE>\n  SCENE_FILE: JSON, historical or libconfig "
                  "scene configuration\n  Output: P6 PPM (render.output, default output.ppm)\n";
 #ifdef RT_BONUS
+    std::cout << "  --studio [SCENE] [--frames N] [--screenshot FILE]  native C++ studio\n";
     std::cout << "  --gui [--watch] [--preview] SCENE   progressive SFML viewer (R reload, Esc "
                  "cancel)\n  --preview SCENE                   fast 320px headless preview\n  "
                  "--cluster HOST:PORT[,HOST:PORT] SCENE  distribute row tiles\n  --worker PORT "
@@ -25,6 +27,10 @@ int main(int argc, char **argv) {
             return 0;
         }
 #ifdef RT_BONUS
+        if (argc >= 2 && std::string(argv[1]) == "--studio") {
+            rt::NativeStudio::run(argc - 2, argv + 2);
+            return 0;
+        }
         if (argc >= 2 && std::string(argv[1]) == "--worker") {
             if (argc < 4 || argc > 5)
                 throw std::runtime_error("USAGE: --worker PORT ROOT [BIND_IPV4]");
