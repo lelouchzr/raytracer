@@ -71,6 +71,16 @@ set_target_properties(raytracer PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BIN
 add_custom_target(stage_raytracer ALL
   COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:raytracer> ${CMAKE_SOURCE_DIR}/raytracer
   DEPENDS raytracer)
+if(APPLE AND RAYTRACER_BONUS AND SDL2_FOUND AND ZLIB_FOUND)
+  add_executable(raytracer_studio MACOSX_BUNDLE bonus/app/main.cpp)
+  target_link_libraries(raytracer_studio PRIVATE raytracer_engine)
+  set_target_properties(raytracer_studio PROPERTIES
+    OUTPUT_NAME "Atelier"
+    MACOSX_BUNDLE_BUNDLE_NAME "Atelier Raytracer"
+    MACOSX_BUNDLE_GUI_IDENTIFIER "com.epitech.raytracer.studio"
+    MACOSX_BUNDLE_BUNDLE_VERSION "3.0"
+    MACOSX_BUNDLE_SHORT_VERSION_STRING "3.0")
+endif()
 include(CTest)
 if(BUILD_TESTING)
   if(RAYTRACER_BONUS)
