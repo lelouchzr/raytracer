@@ -6,6 +6,16 @@
 #endif
 
 namespace rt {
+unsigned StudioWidgets::editedItem_ = 0;
+
+void StudioWidgets::beginEdits() {
+    editedItem_ = 0;
+}
+
+unsigned StudioWidgets::editedItem() {
+    return editedItem_;
+}
+
 Json StudioWidgets::vec(Vec3 v) {
     return Json(Json::Array{Json(v.x), Json(v.y), Json(v.z)});
 }
@@ -16,13 +26,17 @@ Json &StudioWidgets::member(Json &json, const std::string &key, Json fallback) {
 }
 
 #ifdef RT_NATIVE_STUDIO
+void StudioWidgets::recordEdit(const char *key) {
+    editedItem_ = ImGui::GetID(key);
+}
+
 bool StudioWidgets::number(Json &json, const char *key, const char *label, double fallback,
                            double lo, double hi, bool integer) {
     double value = json.number(key, fallback);
     ImGui::TextUnformatted(label);
     ImGui::SetNextItemWidth(-1);
     if (!ImGui::DragScalar((std::string("##") + key).c_str(), ImGuiDataType_Double, &value,
-                           integer ? 1.f : .025f, &lo, &hi, integer ? "%.0f" : "%.3f",
+                           integer ? 1.f : .025f, &lo, &hi, integer ? "%.0f" : "%.6g",
                            ImGuiSliderFlags_AlwaysClamp))
         return false;
     if (!std::isfinite(value))
@@ -30,6 +44,7 @@ bool StudioWidgets::number(Json &json, const char *key, const char *label, doubl
     if (integer)
         value = std::round(value);
     member(json, key, Json(value)) = Json(value);
+    recordEdit(key);
     return true;
 }
 
@@ -45,6 +60,7 @@ bool StudioWidgets::vector(Json &json, const char *key, const char *label, Vec3 
         if (!std::isfinite(value) || std::abs(value) > 1e9)
             throw std::runtime_error("studio vector outside finite range");
     member(json, key, vec({})) = vec({values[0], values[1], values[2]});
+    recordEdit(key);
     return true;
 }
 
@@ -58,6 +74,7 @@ bool StudioWidgets::color(Json &json, const char *key, const char *label, Vec3 f
         return false;
     member(json, key, vec({})) =
         vec({srgbDecode(color[0]), srgbDecode(color[1]), srgbDecode(color[2])});
+    recordEdit(key);
     return true;
 }
 
@@ -69,6 +86,7 @@ bool StudioWidgets::text(Json &json, const char *key, const char *label,
     if (!ImGui::InputText((std::string("##") + key).c_str(), &value))
         return false;
     member(json, key, Json(value)) = Json(value);
+    recordEdit(key);
     return true;
 }
 
@@ -77,6 +95,7 @@ bool StudioWidgets::flag(Json &json, const char *key, const char *label, bool fa
     if (!ImGui::Checkbox(label, &value))
         return false;
     member(json, key, Json(value)) = Json(value);
+    recordEdit(key);
     return true;
 }
 
@@ -90,6 +109,7 @@ bool StudioWidgets::combo(Json &json, const char *key, const char *label,
         for (const auto &item : items)
             if (ImGui::Selectable(item.c_str(), item == value)) {
                 member(json, key, Json(item)) = Json(item);
+                recordEdit(key);
                 changed = true;
             }
         ImGui::EndCombo();

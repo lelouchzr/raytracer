@@ -3,7 +3,12 @@
 
 namespace rt {
 class StudioWidgets {
+    static unsigned editedItem_;
+    static void recordEdit(const char *key);
+
   public:
+    static void beginEdits();
+    static unsigned editedItem();
     static Json &member(Json &, const std::string &, Json fallback);
     static bool number(Json &, const char *, const char *, double, double, double,
                        bool integer = false);

@@ -1,4 +1,5 @@
 #include "rt/studio/StudioApp.hpp"
+#include "rt/studio/StudioPresets.hpp"
 #include "rt/studio/StudioWidgets.hpp"
 #ifdef RT_NATIVE_STUDIO
 #include <functional>
@@ -8,51 +9,6 @@
 namespace rt {
 using W = StudioWidgets;
 
-Json StudioApp::objectDefinition(const std::string &type, const std::string &material) {
-    Json::Object object{
-        {"type", Json(type)}, {"material", Json(material)}, {"translate", W::vec({0, 1, 0})}};
-    if (type == "sphere" || type == "cylinder" || type == "cone" || type == "limited_cylinder" ||
-        type == "limited_cone")
-        object["radius"] = Json(1.);
-    if (type == "limited_cylinder" || type == "limited_cone")
-        object["height"] = Json(2.);
-    if (type == "plane")
-        object["normal"] = W::vec({0, 1, 0});
-    if (type == "box")
-        object["size"] = W::vec({1, 1, 1});
-    if (type == "triangle") {
-        object["a"] = W::vec({-1, 0, 0});
-        object["b"] = W::vec({1, 0, 0});
-        object["c"] = W::vec({0, 2, 0});
-    }
-    if (type == "obj")
-        object["file"] = Json(std::string{});
-    if (type == "group") {
-        object.erase("material");
-        object["children"] = Json(Json::Array{});
-    }
-    return Json(std::move(object));
-}
-
-Json StudioApp::lightDefinition(const std::string &type) {
-    Json::Object light{{"type", Json(type)},
-                       {"color", W::vec({1, 1, 1})},
-                       {"intensity", Json(type == "area" ? 6. : 1.)}};
-    if (type == "area" || type == "point")
-        light["position"] = W::vec({-2, 5, 3});
-    if (type == "area") {
-        light["u"] = W::vec({2, 0, 0});
-        light["v"] = W::vec({0, 0, 2});
-    }
-    if (type == "point") {
-        light["physical"] = Json(true);
-        light["intensity"] = Json(35.);
-    }
-    if (type == "directional")
-        light["direction"] = W::vec({-1, -2, -1});
-    return Json(std::move(light));
-}
-
 void StudioApp::addObject(const std::string &type) {
     if (document_.data().at("materials").object().empty())
         addMaterial();
@@ -60,7 +16,7 @@ void StudioApp::addObject(const std::string &type) {
     auto &list =
         std::get<Json::Array>(std::get<Json::Object>(document_.data().value).at("objects").value);
     list.push_back(
-        objectDefinition(type, document_.data().at("materials").object().begin()->first));
+        StudioPresets::object(type, document_.data().at("materials").object().begin()->first));
     selected_ = static_cast<int>(list.size() - 1);
     selection_ = StudioSelection::Object;
     edit();
@@ -70,7 +26,7 @@ void StudioApp::addLight(const std::string &type) {
     remember();
     auto &list =
         std::get<Json::Array>(std::get<Json::Object>(document_.data().value).at("lights").value);
-    list.push_back(lightDefinition(type));
+    list.push_back(StudioPresets::light(type));
     selected_ = static_cast<int>(list.size() - 1);
     selection_ = StudioSelection::Light;
     edit();
@@ -207,12 +163,16 @@ void StudioApp::fileDialog() {
     if (fileAction_ == StudioFileAction::None)
         return;
     ImGui::OpenPopup("Fichier");
-    ImGui::SetNextWindowSize({720, 480}, ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowSize({720, 560}, ImGuiCond_FirstUseEver);
     if (ImGui::BeginPopupModal("Fichier", nullptr, ImGuiWindowFlags_NoSavedSettings)) {
         ImGui::TextWrapped("Dossier : %s", folder_.string().c_str());
-        if (ImGui::Button("Dossier parent"))
+        if (ImGui::Button("Dossier parent")) {
             folder_ = folder_.parent_path();
-        ImGui::BeginChild("Files", {0, 290}, ImGuiChildFlags_Borders);
+            overwrite_ = false;
+        }
+        // Reserve room for the filename, overwrite prompt, actions and error message.
+        float listHeight = std::max(80.f, ImGui::GetContentRegionAvail().y - 180.f);
+        ImGui::BeginChild("Files", {0, listHeight}, ImGuiChildFlags_Borders);
         std::vector<std::filesystem::directory_entry> entries;
         std::error_code error;
         for (std::filesystem::directory_iterator it(folder_, error), end; !error && it != end;
@@ -229,13 +189,17 @@ void StudioApp::fileDialog() {
                 if (dir) {
                     folder_ = entry.path();
                     filename_.clear();
+                    overwrite_ = false;
                     break;
                 }
+                if (filename_ != entry.path().filename())
+                    overwrite_ = false;
                 filename_ = entry.path().filename().string();
             }
         }
         ImGui::EndChild();
-        ImGui::InputText("Nom du fichier", &filename_);
+        if (ImGui::InputText("Nom du fichier", &filename_))
+            overwrite_ = false;
         bool saving = fileAction_ == StudioFileAction::Save ||
                       fileAction_ == StudioFileAction::Png || fileAction_ == StudioFileAction::Hdr;
         if (overwrite_)
@@ -281,8 +245,10 @@ void StudioApp::dialogs() {
         if (ImGui::Button("Appliquer")) {
             try {
                 auto json = Json::parse(jsonText_);
+                auto replacement = document_;
+                replacement.replace(std::move(json));
                 remember();
-                document_.replace(std::move(json));
+                document_ = std::move(replacement);
                 selection_ = StudioSelection::Camera;
                 edit();
                 ImGui::CloseCurrentPopup();

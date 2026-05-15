@@ -78,6 +78,9 @@ void StudioApp::viewport(float width, float height) {
     ImGui::Begin("View", nullptr,
                  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
                      ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoScrollbar);
+    if (ImGui::IsKeyPressed(ImGuiKey_F3, false) &&
+        !ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId))
+        ImGui::SetKeyboardFocusHere();
     ImGui::Checkbox("Mise a jour automatique", &live_);
     ImGui::SameLine();
     if (ImGui::Button("Calculer")) {
@@ -161,11 +164,12 @@ void StudioApp::viewport(float width, float height) {
                          : 0;
     ImGui::ProgressBar(fraction, {-1, 4}, "");
     ImGui::Text("%s | %d x %d | %d ech./pixel | passe %d | %.2f s",
-                !state.error.empty()                ? "Erreur de scene"
-                : state.running                     ? "Calcul en cours"
-                : dirty_                            ? "Modifications en attente"
-                : complete == state.settings.height ? "Rendu termine"
-                                                    : "En pause",
+                !state.error.empty()                          ? "Erreur de scene"
+                : state.running                               ? "Calcul en cours"
+                : dirty_                                      ? "Modifications en attente"
+                : state.control && state.control->cancelled() ? "En pause"
+                : complete == state.settings.height           ? "Rendu termine"
+                                                              : "En pause",
                 state.settings.width, state.settings.height, state.settings.samples, state.pass,
                 state.seconds);
     auto error = state.error.empty() ? message_ : state.error;

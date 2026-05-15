@@ -96,7 +96,11 @@ void StudioDocument::replace(Json json) {
     json.at("camera").object();
     json.at("materials").object();
     std::function<void(const Json &)> inspectObject = [&](const Json &object) {
-        object.at("type").string();
+        auto type = object.at("type").string();
+        if (type != "group")
+            object.at("material").string();
+        if (object.has("translate"))
+            object.at("translate").vector();
         if (object.has("children"))
             for (const auto &child : object.at("children").array())
                 inspectObject(child);

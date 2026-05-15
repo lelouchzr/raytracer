@@ -29,6 +29,7 @@ class StudioApp {
     int imageWidth_ = 0, imageHeight_ = 0, displayedRows_ = -1;
     unsigned long long displayedGeneration_ = 0;
     int displayedPass_ = -1;
+    unsigned propertyEdit_ = 0;
     std::vector<std::uint8_t> rgba_;
     std::chrono::steady_clock::time_point lastRequest_;
     void shutdown() noexcept;
@@ -57,8 +58,6 @@ class StudioApp {
     void duplicate();
     void remove();
     void savePng(const std::filesystem::path &, bool wholeWindow = false);
-    static Json objectDefinition(const std::string &, const std::string &);
-    static Json lightDefinition(const std::string &);
 
   public:
     explicit StudioApp(const std::filesystem::path &);

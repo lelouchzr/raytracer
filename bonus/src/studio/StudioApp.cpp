@@ -1,5 +1,6 @@
 #include "rt/studio/StudioApp.hpp"
 #include "rt/math/Color.hpp"
+#include "rt/studio/StudioPresets.hpp"
 #include "rt/studio/StudioWidgets.hpp"
 #ifdef RT_NATIVE_STUDIO
 #include <SDL.h>
@@ -124,6 +125,7 @@ void StudioApp::shutdown() noexcept {
 }
 
 void StudioApp::remember() {
+    propertyEdit_ = 0;
     auto text = document_.data().dump();
     if (undo_.empty() || undo_.back() != text)
         undo_.push_back(std::move(text));
@@ -138,6 +140,7 @@ void StudioApp::edit() {
 }
 
 void StudioApp::undo(bool forward) {
+    propertyEdit_ = 0;
     auto &from = forward ? redo_ : undo_;
     auto &to = forward ? undo_ : redo_;
     if (from.empty())
@@ -157,6 +160,9 @@ void StudioApp::header(float width) {
     ImGui::SameLine();
     ImGui::TextUnformatted(document_.source().filename().string().c_str());
     ImGui::SameLine(std::max(400.f, width - 700.f));
+    if (ImGui::IsKeyPressed(ImGuiKey_F4, false) &&
+        !ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId))
+        ImGui::SetKeyboardFocusHere();
     if (ImGui::Button("Ouvrir"))
         chooseFile(StudioFileAction::Open, "scene.json");
     ImGui::SameLine();
@@ -180,6 +186,9 @@ void StudioApp::header(float width) {
 void StudioApp::tree(float height) {
     panel("Scene", 0, 56, 220, height - 80);
     ImGui::SeparatorText("SCENE");
+    if (ImGui::IsKeyPressed(ImGuiKey_F1, false) &&
+        !ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId))
+        ImGui::SetKeyboardFocusHere();
     if (ImGui::Button("Charger un exemple", {-1, 0}))
         ImGui::OpenPopup("Examples");
     if (ImGui::BeginPopup("Examples")) {
@@ -191,10 +200,15 @@ void StudioApp::tree(float height) {
         std::sort(examples.begin(), examples.end());
         for (const auto &path : examples)
             if (ImGui::Selectable(path.stem().string().c_str())) {
-                remember();
-                document_ = StudioDocument(path);
-                selection_ = StudioSelection::Camera;
-                edit();
+                try {
+                    auto replacement = StudioDocument(path);
+                    remember();
+                    document_ = std::move(replacement);
+                    selection_ = StudioSelection::Camera;
+                    edit();
+                } catch (const std::exception &error) {
+                    message_ = error.what();
+                }
             }
         ImGui::EndPopup();
     }
@@ -202,10 +216,8 @@ void StudioApp::tree(float height) {
     if (ImGui::SmallButton("+ Objet"))
         ImGui::OpenPopup("AddObject");
     if (ImGui::BeginPopup("AddObject")) {
-        for (const auto &type :
-             {"sphere", "plane", "limited_cylinder", "limited_cone", "box", "triangle", "torus",
-              "tanglecube", "fractal", "mobius", "obj", "group", "cylinder", "cone"})
-            if (ImGui::Selectable(type))
+        for (const auto &type : StudioPresets::objects())
+            if (ImGui::Selectable(type.c_str()))
                 addObject(type);
         ImGui::EndPopup();
     }
@@ -223,8 +235,8 @@ void StudioApp::tree(float height) {
     if (ImGui::SmallButton("+ Lumiere"))
         ImGui::OpenPopup("AddLight");
     if (ImGui::BeginPopup("AddLight")) {
-        for (const auto &type : {"area", "point", "directional", "ambient"})
-            if (ImGui::Selectable(type))
+        for (const auto &type : StudioPresets::lights())
+            if (ImGui::Selectable(type.c_str()))
                 addLight(type);
         ImGui::EndPopup();
     }
@@ -275,13 +287,18 @@ void StudioApp::run(int frameLimit, const std::filesystem::path &screenshot) {
             if (event.type == SDL_QUIT ||
                 (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE))
                 done = true;
-            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE &&
-                !ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId))
-                done = true;
         }
         ImGui_ImplSDLRenderer2_NewFrame();
         ImGui_ImplSDL2_NewFrame();
         ImGui::NewFrame();
+        // Keep every panel reachable without a mouse, including on a remote desktop.
+        if (!ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId)) {
+            for (auto [key, name] :
+                 {std::pair{ImGuiKey_F1, "Scene"}, std::pair{ImGuiKey_F2, "Properties"},
+                  std::pair{ImGuiKey_F3, "View"}, std::pair{ImGuiKey_F4, "Toolbar"}})
+                if (ImGui::IsKeyPressed(key, false))
+                    ImGui::SetWindowFocus(name);
+        }
         auto size = ImGui::GetIO().DisplaySize;
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{16, 8});
         header(size.x);
@@ -293,7 +310,8 @@ void StudioApp::run(int frameLimit, const std::filesystem::path &screenshot) {
         dialogs();
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{8, 3});
         panel("Footer", 0, size.y - 24, size.x, 24);
-        ImGui::TextDisabled("C++ / SDL2 / Dear ImGui    GGX - MIS - Beer-Lambert - HDR");
+        ImGui::TextDisabled(
+            "C++ / SDL2 / Dear ImGui    F1 Scene | F2 Proprietes | F3 Rendu | F4 Fichiers");
         ImGui::End();
         ImGui::PopStyleVar();
         if (dirty_ && live_ &&

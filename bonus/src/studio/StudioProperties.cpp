@@ -1,4 +1,5 @@
 #include "rt/studio/StudioApp.hpp"
+#include "rt/studio/StudioPresets.hpp"
 #include "rt/studio/StudioWidgets.hpp"
 #ifdef RT_NATIVE_STUDIO
 #include <imgui.h>
@@ -30,15 +31,12 @@ Json *StudioApp::selectedNode() {
 
 void StudioApp::objectProperties(Json &node) {
     auto type = node.at("type").string();
-    if (W::combo(node, "type", "Primitive",
-                 {"sphere", "plane", "limited_cylinder", "limited_cone", "box", "triangle", "torus",
-                  "tanglecube", "fractal", "mobius", "obj", "group", "cylinder", "cone"},
-                 type)) {
+    if (W::combo(node, "type", "Primitive", StudioPresets::objects(), type)) {
         auto &materials = document_.data().at("materials").object();
         auto material =
             node.string("material", materials.empty() ? "material" : materials.begin()->first);
         auto position = node.vector("translate", {});
-        node = objectDefinition(node.at("type").string(), material);
+        node = StudioPresets::object(node.at("type").string(), material);
         W::member(node, "translate", W::vec(position)) = W::vec(position);
         type = node.at("type").string();
     }
@@ -137,8 +135,8 @@ void StudioApp::materialProperties(Json &node) {
 
 void StudioApp::lightProperties(Json &node) {
     auto type = node.at("type").string();
-    if (W::combo(node, "type", "Type", {"area", "point", "directional", "ambient"}, type)) {
-        node = lightDefinition(node.at("type").string());
+    if (W::combo(node, "type", "Type", StudioPresets::lights(), type)) {
+        node = StudioPresets::light(node.at("type").string());
         type = node.at("type").string();
     }
     W::color(node, "color", "Couleur", {1, 1, 1});
@@ -149,7 +147,8 @@ void StudioApp::lightProperties(Json &node) {
     if (type == "directional")
         W::vector(node, "direction", "Direction de propagation", {-1, -2, -1});
     if (type == "point") {
-        W::flag(node, "physical", "Attenuation physique", true);
+        W::flag(node, "physical", "Attenuation physique",
+                document_.data().at("render").string("integrator", "whitted") != "whitted");
         W::number(node, "falloff", "Attenuation artistique", 0, 0, 100);
     }
     if (type == "area") {
@@ -167,20 +166,21 @@ void StudioApp::cameraProperties(Json &node) {
 }
 
 void StudioApp::renderProperties(Json &node) {
-    W::combo(node, "integrator", "Moteur", {"pbr", "path", "whitted", "photon"}, "pbr");
-    W::number(node, "width", "Largeur", 960, 1, 8192, true);
-    W::number(node, "height", "Hauteur", 600, 1, 8192, true);
-    W::number(node, "samples", "Echantillons par pixel", 128, 1, 4096, true);
-    W::number(node, "depth", "Profondeur", 10, 1, 24, true);
+    W::combo(node, "integrator", "Moteur", {"pbr", "path", "whitted", "photon"}, "whitted");
+    W::number(node, "width", "Largeur", 640, 1, 8192, true);
+    W::number(node, "height", "Hauteur", 360, 1, 8192, true);
+    W::number(node, "samples", "Echantillons par pixel", 16, 1, 4096, true);
+    W::number(node, "depth", "Profondeur", 6, 1, 24, true);
     W::number(node, "threads", "Threads (0 = auto)", 0, 0, 256, true);
     W::number(node, "exposure", "Exposition", 1, .01, 100);
-    W::combo(node, "toneMap", "Tone mapping", {"neutral", "reinhard", "none"}, "neutral");
-    W::combo(node, "colorSpace", "Encodage", {"srgb", "gamma2"}, "srgb");
+    W::combo(node, "toneMap", "Tone mapping", {"neutral", "reinhard", "none"}, "reinhard");
+    W::combo(node, "colorSpace", "Encodage", {"srgb", "gamma2"},
+             node.string("integrator", "whitted") == "pbr" ? "srgb" : "gamma2");
     W::number(node, "adaptive", "Erreur adaptative (0 = off)", 0, 0, 1);
     W::number(node, "minSamples", "Minimum adaptatif", 4, 2, 4096, true);
     W::number(node, "ao", "Occlusion ambiante", 0, 0, 128, true);
-    if (node.string("integrator", "pbr") == "photon") {
-        W::number(node, "photons", "Photons", 100000, 0, 2000000, true);
+    if (node.string("integrator", "whitted") == "photon") {
+        W::number(node, "photons", "Photons", 0, 0, 2000000, true);
         W::number(node, "photonRadius", "Rayon de collecte", .3, .001, 10);
     }
 }
@@ -215,6 +215,9 @@ void StudioApp::inspector(float width, float height) {
                  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
                      ImGuiWindowFlags_NoSavedSettings);
     ImGui::SeparatorText("PROPRIETES");
+    if (ImGui::IsKeyPressed(ImGuiKey_F2, false) &&
+        !ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId))
+        ImGui::SetKeyboardFocusHere();
     if (selection_ == StudioSelection::Material)
         ImGui::TextUnformatted(material_.c_str());
     if (selection_ == StudioSelection::Object || selection_ == StudioSelection::Light ||
@@ -226,6 +229,7 @@ void StudioApp::inspector(float width, float height) {
             remove();
         ImGui::Separator();
     }
+    W::beginEdits();
     auto before = document_.data().dump();
     ImGui::PushID(static_cast<int>(selection_));
     try {
@@ -248,12 +252,19 @@ void StudioApp::inspector(float width, float height) {
     }
     ImGui::PopID();
     if (document_.data().dump() != before) {
-        undo_.push_back(std::move(before));
-        if (undo_.size() > 100)
-            undo_.erase(undo_.begin());
+        // A drag or text entry is one undo step, even when it spans many frames.
+        auto item = W::editedItem();
+        if (item == 0 || item != propertyEdit_) {
+            undo_.push_back(std::move(before));
+            if (undo_.size() > 100)
+                undo_.erase(undo_.begin());
+        }
+        propertyEdit_ = item;
         redo_.clear();
         edit();
     }
+    if (!ImGui::IsAnyItemActive())
+        propertyEdit_ = 0;
     ImGui::End();
 }
 } // namespace rt
