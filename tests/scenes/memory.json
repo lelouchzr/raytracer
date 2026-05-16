@@ -1,0 +1,7 @@
+{
+  "camera": {"position": [0, 1, 5], "target": [0, 0, 0]},
+  "render": {"width": 32, "height": 24, "samples": 2, "threads": 2, "depth": 4, "integrator": "pbr"},
+  "materials": {"red": {"type": "pbr", "color": [0.7, 0.04, 0.02], "roughness": 0.35}},
+  "objects": [{"type": "sphere", "material": "red"}],
+  "lights": [{"type": "area", "position": [0, 4, 2], "u": [2, 0, 0], "v": [0, 0, 2], "intensity": 6}]
+}

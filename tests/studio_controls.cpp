@@ -1,3 +1,4 @@
+#include "TestTiming.hpp"
 #include "rt/studio/StudioDocument.hpp"
 #include "rt/studio/StudioPresets.hpp"
 #include "rt/studio/StudioRenderer.hpp"
@@ -21,7 +22,7 @@ Json &member(Json &value, const std::string &key) {
 
 StudioProgress render(StudioRenderer &renderer, const Json &scene) {
     renderer.restart(scene);
-    auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(15);
+    auto deadline = std::chrono::steady_clock::now() + rt::test::budget(15);
     while (std::chrono::steady_clock::now() < deadline) {
         auto state = renderer.progress();
         if (!state.running) {

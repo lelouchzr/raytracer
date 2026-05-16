@@ -1,3 +1,4 @@
+#include "TestTiming.hpp"
 #include "rt/studio/StudioDocument.hpp"
 #include "rt/studio/StudioRenderer.hpp"
 #include <chrono>
@@ -13,7 +14,7 @@ void check(bool condition, const char *message) {
 }
 
 StudioProgress wait(StudioRenderer &renderer) {
-    auto deadline = std::chrono::steady_clock::now() + std::chrono::seconds(10);
+    auto deadline = std::chrono::steady_clock::now() + rt::test::budget(10);
     while (std::chrono::steady_clock::now() < deadline) {
         auto state = renderer.progress();
         if (!state.running)
@@ -81,7 +82,7 @@ int main(int argc, char **argv) {
         renderer.restart(small);
         std::this_thread::sleep_for(std::chrono::milliseconds(25));
         renderer.cancel();
-        check(std::chrono::steady_clock::now() - start < std::chrono::seconds(3),
+        check(std::chrono::steady_clock::now() - start < rt::test::budget(3),
               "native render cancellation stalled");
         bool rejected = false;
         try {
