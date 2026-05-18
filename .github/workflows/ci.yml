@@ -1,0 +1,22 @@
+name: C++ validation
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        bonus: ["ON", "OFF"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - if: matrix.os == 'ubuntu-latest' && matrix.bonus == 'ON'
+        run: sudo apt-get update && sudo apt-get install -y libsfml-dev libsdl2-dev zlib1g-dev fonts-dejavu-core xvfb
+      - if: matrix.os == 'macos-latest' && matrix.bonus == 'ON'
+        run: brew install sfml sdl2
+      - run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DRAYTRACER_BONUS=${{ matrix.bonus }}
+      - run: cmake --build build --parallel 4
+      - run: ctest --test-dir build --output-on-failure
