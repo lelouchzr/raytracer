@@ -1,3 +1,4 @@
+#include "rt/io/ResourcePaths.hpp"
 #include "rt/studio/StudioApp.hpp"
 #include "rt/studio/StudioPresets.hpp"
 #include "rt/studio/StudioWidgets.hpp"
@@ -190,10 +191,9 @@ void StudioApp::environmentProperties() {
     bool enabled = root.count("environment") != 0;
     if (ImGui::Checkbox("Activer une carte HDR", &enabled)) {
         if (enabled)
-            root["environment"] = Json(Json::Object{
-                {"file", Json((std::filesystem::path(RT_PROJECT_ROOT) / "bonus/assets/studio.hdr")
-                                  .string())},
-                {"intensity", Json(1.)}});
+            root["environment"] = Json(
+                Json::Object{{"file", Json((resourceRoot() / "bonus/assets/studio.hdr").string())},
+                             {"intensity", Json(1.)}});
         else
             root.erase("environment");
     }

@@ -1,4 +1,5 @@
 #include "rt/studio/NativeStudio.hpp"
+#include "rt/io/ResourcePaths.hpp"
 #include "rt/studio/StudioApp.hpp"
 
 namespace rt {
@@ -8,9 +9,7 @@ void NativeStudio::run(int argc, char **argv) {
     (void)argv;
     throw std::runtime_error("native studio requires SDL2 and zlib at build time");
 #else
-    std::filesystem::path source = std::filesystem::path(RT_PROJECT_ROOT) /
-                                   "bonus/scenes/pbr_studio.json",
-                          screenshot;
+    std::filesystem::path source, screenshot;
     int frames = 0;
     bool haveSource = false;
     for (int i = 0; i < argc; ++i) {
@@ -31,6 +30,8 @@ void NativeStudio::run(int argc, char **argv) {
         } else
             throw std::runtime_error("studio expects one scene file");
     }
+    if (!haveSource)
+        source = resourceRoot() / "bonus/scenes/pbr_studio.json";
     StudioApp application(source);
     application.run(frames, screenshot);
 #endif

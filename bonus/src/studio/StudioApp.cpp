@@ -1,4 +1,5 @@
 #include "rt/studio/StudioApp.hpp"
+#include "rt/io/ResourcePaths.hpp"
 #include "rt/math/Color.hpp"
 #include "rt/studio/StudioPresets.hpp"
 #include "rt/studio/StudioWidgets.hpp"
@@ -193,8 +194,8 @@ void StudioApp::tree(float height) {
         ImGui::OpenPopup("Examples");
     if (ImGui::BeginPopup("Examples")) {
         std::vector<std::filesystem::path> examples;
-        for (const auto &entry : std::filesystem::directory_iterator(
-                 std::filesystem::path(RT_PROJECT_ROOT) / "bonus/scenes"))
+        for (const auto &entry :
+             std::filesystem::directory_iterator(resourceRoot() / "bonus/scenes"))
             if (entry.path().extension() == ".json")
                 examples.push_back(entry.path());
         std::sort(examples.begin(), examples.end());

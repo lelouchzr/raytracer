@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
-project(raytracer VERSION 2.0 LANGUAGES CXX)
+project(raytracer VERSION 3.0.0 LANGUAGES CXX)
 option(RAYTRACER_BONUS "Build advanced rendering extensions from bonus/" ON)
 option(RAYTRACER_WERROR "Treat every compiler warning as an error" ON)
 option(RAYTRACER_SANITIZE "Enable address and undefined behavior sanitizers" OFF)
+option(RAYTRACER_REQUIRE_GUI "Require both native studio and progressive viewer dependencies" OFF)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -54,6 +55,9 @@ if(RAYTRACER_BONUS)
     endif()
   endif()
 endif()
+if(RAYTRACER_REQUIRE_GUI AND (NOT RAYTRACER_BONUS OR NOT SDL2_FOUND OR NOT ZLIB_FOUND OR NOT SFML_FOUND))
+  message(FATAL_ERROR "RAYTRACER_REQUIRE_GUI needs bonuses, SDL2 >= 2.0.17, zlib and SFML >= 2.5")
+endif()
 if(RAYTRACER_SANITIZE)
   target_compile_options(raytracer_engine PUBLIC -fsanitize=address,undefined -fno-omit-frame-pointer)
   target_link_options(raytracer_engine PUBLIC -fsanitize=address,undefined)
@@ -84,6 +88,15 @@ if(APPLE AND RAYTRACER_BONUS AND SDL2_FOUND AND ZLIB_FOUND)
     MACOSX_BUNDLE_GUI_IDENTIFIER "com.epitech.raytracer.studio"
     MACOSX_BUNDLE_BUNDLE_VERSION "3.0"
     MACOSX_BUNDLE_SHORT_VERSION_STRING "3.0")
+  add_dependencies(raytracer_studio raytracer_example)
+  add_custom_command(TARGET raytracer_studio POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/bonus/assets"
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/bonus/assets"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/bonus/scenes"
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/bonus/scenes"
+    COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/plugins"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:raytracer_example>
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/plugins/raytracer_example.so")
 endif()
 include(CTest)
 if(BUILD_TESTING)
@@ -126,6 +139,10 @@ if(BUILD_TESTING)
   find_package(Python3 COMPONENTS Interpreter)
   if(Python3_FOUND)
     if(RAYTRACER_BONUS)
+      add_executable(resource_paths_tests tests/asset_paths.cpp)
+      target_link_libraries(resource_paths_tests PRIVATE raytracer_engine)
+      add_test(NAME resource_paths COMMAND ${Python3_EXECUTABLE}
+        ${CMAKE_SOURCE_DIR}/tests/resource_paths.py $<TARGET_FILE:resource_paths_tests> ${CMAKE_SOURCE_DIR})
       add_test(NAME systems_features COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/systems.py $<TARGET_FILE:raytracer> ${CMAKE_SOURCE_DIR} $<TARGET_FILE:bad_abi> $<TARGET_FILE:raytracer_example>)
       find_program(XVFB_RUN xvfb-run)
       if(SDL2_FOUND AND ZLIB_FOUND AND XVFB_RUN)

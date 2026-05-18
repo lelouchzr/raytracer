@@ -1,4 +1,5 @@
 #include "rt/studio/StudioPresets.hpp"
+#include "rt/io/ResourcePaths.hpp"
 #include "rt/studio/StudioWidgets.hpp"
 
 namespace rt {
@@ -34,8 +35,7 @@ Json StudioPresets::object(const std::string &type, const std::string &material)
         object["c"] = W::vec({0, 2, 0});
     }
     if (type == "obj")
-        object["file"] =
-            Json((std::filesystem::path(RT_PROJECT_ROOT) / "bonus/assets/crystal.obj").string());
+        object["file"] = Json((resourceRoot() / "bonus/assets/crystal.obj").string());
     if (type == "group") {
         object.erase("material");
         object["children"] = Json(Json::Array{Json(
