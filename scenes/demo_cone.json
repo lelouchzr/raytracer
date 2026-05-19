@@ -2,19 +2,19 @@
   "camera": {
     "position": [
       6,
-      3,
-      8
+      3.5,
+      9
     ],
     "target": [
       0,
-      0.8,
+      1.8,
       0
     ],
-    "fov": 45
+    "fov": 40
   },
   "render": {
-    "width": 640,
-    "height": 400,
+    "width": 1280,
+    "height": 800,
     "output": "output.ppm"
   },
   "background": [
@@ -41,17 +41,17 @@
   "objects": [
     {
       "type": "cone",
-      "radius": 1,
+      "radius": 0.35,
       "translate": [
         0,
-        1,
+        2,
         0
       ],
       "material": "red",
       "rotate": [
-        15,
         0,
-        20
+        0,
+        0
       ]
     },
     {
@@ -69,7 +69,7 @@
       "direction": [
         -1,
         -2,
-        -1
+        -2
       ],
       "intensity": 0.9
     }
