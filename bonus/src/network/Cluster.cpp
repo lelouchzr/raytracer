@@ -1,9 +1,11 @@
 #include "rt/network/Cluster.hpp"
+#include "rt/concurrency/JoiningThread.hpp"
 #include "rt/network/AssetScope.hpp"
 #include "rt/network/Socket.hpp"
 #include "rt/render/RowRenderer.hpp"
 #include <atomic>
 #include <bit>
+#include <cstdint>
 #include <iostream>
 #include <sstream>
 #include <thread>
@@ -159,7 +161,7 @@ void Cluster::render(const std::filesystem::path &file, const std::string &endpo
             stop = true;
         }
     };
-    std::vector<std::jthread> workers;
+    std::vector<JoiningThread> workers;
     for (const auto &server : servers)
         workers.emplace_back(job, server);
     workers.clear();

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <set>
 #include <stdexcept>
+#include <string_view>
 
 namespace rt::io {
 namespace {
@@ -19,24 +20,24 @@ void validate(const ConfigValue &object, std::initializer_list<const char *> all
     }
 }
 
-const ConfigValue *find(const ConfigValue &object, const std::string &key) {
+const ConfigValue *find(const ConfigValue &object, std::string_view key) {
     if (object.kind != ConfigKind::Object)
-        throw std::runtime_error("expected configuration group for '" + key + "'");
+        throw std::runtime_error("expected configuration group for '" + std::string(key) + "'");
     const ConfigValue *result = nullptr;
     for (const auto &[name, value] : object.members) {
         if (name != key)
             continue;
         if (result)
-            throw std::runtime_error("duplicate configuration field '" + key + "'");
+            throw std::runtime_error("duplicate configuration field '" + std::string(key) + "'");
         result = &value;
     }
     return result;
 }
 
-const ConfigValue &required(const ConfigValue &object, const std::string &key) {
+const ConfigValue &required(const ConfigValue &object, std::string_view key) {
     const auto *value = find(object, key);
     if (!value)
-        throw std::runtime_error("missing configuration field '" + key + "'");
+        throw std::runtime_error("missing configuration field '" + std::string(key) + "'");
     return *value;
 }
 

@@ -1,5 +1,6 @@
 #include "rt/render/RowRenderer.hpp"
 #include "rt/Extensions.hpp"
+#include "rt/concurrency/JoiningThread.hpp"
 #include "rt/math/Color.hpp"
 #include <atomic>
 #include <numeric>
@@ -94,7 +95,7 @@ void renderImage(const Scene &s, RenderControl &control, int begin, int end) {
     unsigned threads = s.settings.threads ? static_cast<unsigned>(s.settings.threads)
                                           : std::max(1u, std::thread::hardware_concurrency());
     threads = std::min(threads, static_cast<unsigned>(std::max(1, end - begin)));
-    std::vector<std::jthread> workers;
+    std::vector<JoiningThread> workers;
     for (unsigned i = 0; i < threads; ++i)
         workers.emplace_back(worker);
     workers.clear();

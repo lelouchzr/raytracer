@@ -1,6 +1,7 @@
 #include "rt/math/Color.hpp"
 #include "rt/studio/StudioApp.hpp"
 #include "rt/studio/StudioWidgets.hpp"
+#include <cstdint>
 #ifdef RT_NATIVE_STUDIO
 #include <SDL.h>
 #include <fstream>

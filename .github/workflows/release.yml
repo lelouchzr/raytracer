@@ -1,0 +1,65 @@
+name: Release binaries
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version label (vMAJOR.MINOR.PATCH)
+        required: true
+        default: v3.0.0
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            label: linux-x86_64
+          - os: macos-15
+            label: macos-arm64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y g++-12 cmake pkg-config libsfml-dev libsdl2-dev zlib1g-dev fonts-dejavu-core xvfb xauth
+      - name: Install macOS dependencies
+        if: runner.os == 'macOS'
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: "1"
+          HOMEBREW_NO_INSTALL_CLEANUP: "1"
+        run: brew install cmake pkg-config sfml sdl2 zlib
+      - name: Configure Linux
+        if: runner.os == 'Linux'
+        run: cmake -S . -B build-release -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=g++-12 -DRAYTRACER_REQUIRE_GUI=ON
+      - name: Configure macOS
+        if: runner.os == 'macOS'
+        run: cmake -S . -B build-release -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 -DRAYTRACER_REQUIRE_GUI=ON
+      - name: Build and test
+        run: |
+          cmake --build build-release --parallel 4
+          ctest --test-dir build-release --output-on-failure
+      - name: Package
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: python3 tools/package_release.py build-release --version "$RELEASE_VERSION"
+      - name: Verify Linux archive and real windows
+        if: runner.os == 'Linux'
+        run: xvfb-run -a python3 tests/release_package.py dist/*.tar.gz --gui
+      - name: Verify macOS archive and app bundle
+        if: runner.os == 'macOS'
+        run: python3 tests/release_package.py dist/*.tar.gz
+      - uses: actions/upload-artifact@v7
+        with:
+          name: raytracer-${{ matrix.label }}
+          path: |
+            dist/*.tar.gz
+            dist/*.sha256
+          if-no-files-found: error
+          retention-days: 14

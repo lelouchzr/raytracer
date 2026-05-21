@@ -1,8 +1,9 @@
 #pragma once
+#include "rt/concurrency/JoiningThread.hpp"
 #include "rt/engine.hpp"
 #include "rt/render/RenderControl.hpp"
+#include <atomic>
 #include <chrono>
-#include <thread>
 
 namespace rt {
 struct StudioProgress {
@@ -18,10 +19,11 @@ struct StudioProgress {
 class StudioRenderer {
     mutable std::mutex mutex_;
     StudioProgress progress_;
-    std::jthread worker_;
+    std::atomic<bool> stop_{false};
+    JoiningThread worker_;
     std::filesystem::path directory_;
     std::chrono::steady_clock::time_point started_;
-    void run(Json, unsigned long long, const std::filesystem::path &, std::stop_token);
+    void run(Json, unsigned long long, const std::filesystem::path &);
 
   public:
     StudioRenderer();

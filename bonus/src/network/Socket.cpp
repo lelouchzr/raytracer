@@ -3,6 +3,7 @@
 #include <arpa/inet.h>
 #include <array>
 #include <cerrno>
+#include <cstdint>
 #include <cstring>
 #include <fcntl.h>
 #include <netdb.h>

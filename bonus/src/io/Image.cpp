@@ -3,6 +3,7 @@
 #include "rt/json.hpp"
 #include "rt/math/Color.hpp"
 #include <cctype>
+#include <cstdint>
 #include <fstream>
 
 namespace rt {

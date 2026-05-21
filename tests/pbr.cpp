@@ -9,6 +9,7 @@
 #include "rt/render/RowRenderer.hpp"
 #include <bit>
 #include <chrono>
+#include <cstdint>
 #include <fstream>
 #include <iostream>
 

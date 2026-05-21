@@ -2,6 +2,7 @@
 #include "rt/engine.hpp"
 #include <bit>
 #include <chrono>
+#include <cstdint>
 #include <cstring>
 #include <fstream>
 #include <sstream>

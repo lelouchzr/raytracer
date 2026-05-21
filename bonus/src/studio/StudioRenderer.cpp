@@ -19,7 +19,7 @@ StudioRenderer::~StudioRenderer() {
 }
 
 void StudioRenderer::cancel() {
-    worker_.request_stop();
+    stop_.store(true, std::memory_order_release);
     {
         std::lock_guard lock(mutex_);
         if (progress_.control)
@@ -33,6 +33,7 @@ void StudioRenderer::cancel() {
 
 void StudioRenderer::restart(const Json &json, const std::filesystem::path &hdrOutput) {
     cancel();
+    stop_.store(false, std::memory_order_release);
     unsigned long long generation;
     {
         std::lock_guard lock(mutex_);
@@ -42,9 +43,8 @@ void StudioRenderer::restart(const Json &json, const std::filesystem::path &hdrO
         progress_.running = true;
         progress_.pass = 0;
     }
-    worker_ = std::jthread([this, json, generation, hdrOutput](std::stop_token stop) {
-        run(json, generation, hdrOutput, stop);
-    });
+    worker_ =
+        JoiningThread([this, json, generation, hdrOutput] { run(json, generation, hdrOutput); });
 }
 
 StudioProgress StudioRenderer::progress() const {
@@ -57,7 +57,7 @@ StudioProgress StudioRenderer::progress() const {
 }
 
 void StudioRenderer::run(Json json, unsigned long long generation,
-                         const std::filesystem::path &hdrOutput, std::stop_token stop) {
+                         const std::filesystem::path &hdrOutput) {
     auto start = std::chrono::steady_clock::now();
     try {
         auto file = directory_ / "scene.json";
@@ -82,7 +82,7 @@ void StudioRenderer::run(Json json, unsigned long long generation,
         }
         int pass = 0;
         for (auto stage : stages) {
-            if (stop.stop_requested())
+            if (stop_.load(std::memory_order_acquire))
                 break;
             auto scene = base;
             scene.settings.width = stage[0];
@@ -93,7 +93,7 @@ void StudioRenderer::run(Json json, unsigned long long generation,
             auto control = std::make_shared<RenderControl>(stage[0], stage[1]);
             {
                 std::lock_guard lock(mutex_);
-                if (stop.stop_requested()) {
+                if (stop_.load(std::memory_order_acquire)) {
                     control->cancel();
                     break;
                 }

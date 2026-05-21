@@ -1,8 +1,10 @@
 #include "rt/display/ProgressiveViewer.hpp"
+#include "rt/concurrency/JoiningThread.hpp"
 #include "rt/math/Color.hpp"
 #include "rt/render/AdvancedIntegrator.hpp"
 #include "rt/render/RowRenderer.hpp"
 #include <chrono>
+#include <cstdint>
 #include <thread>
 #ifdef RT_SFML
 #include <SFML/Graphics.hpp>
@@ -31,7 +33,7 @@ void ProgressiveViewer::run(const std::filesystem::path &file, bool watch, bool 
     std::exception_ptr failure;
     std::mutex failureMutex;
     auto launch = [&]() {
-        return std::jthread([&]() {
+        return JoiningThread([&]() {
             try {
                 if (scene.settings.integrator == "photon")
                     scene.integrator = std::make_shared<AdvancedIntegrator>(
@@ -45,7 +47,7 @@ void ProgressiveViewer::run(const std::filesystem::path &file, bool watch, bool 
             }
         });
     };
-    std::jthread task;
+    JoiningThread task;
 #if SFML_VERSION_MAJOR >= 3
     sf::RenderWindow window(sf::VideoMode({static_cast<unsigned>(scene.settings.width),
                                            static_cast<unsigned>(scene.settings.height)}),
