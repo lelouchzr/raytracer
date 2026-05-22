@@ -45,6 +45,7 @@ StudioApp::StudioApp(const std::filesystem::path &file)
             throw std::runtime_error(SDL_GetError());
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
+        StudioWidgets::configureInputs();
         auto &io = ImGui::GetIO();
         io.IniFilename = nullptr;
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
@@ -270,7 +271,6 @@ void StudioApp::tree(float height) {
     if (ImGui::Selectable("Qualite et couleurs", selection_ == StudioSelection::Render))
         selection_ = StudioSelection::Render;
     if (ImGui::Button("Editeur JSON", {-1, 0})) {
-        jsonText_ = StudioDocument::formatted(document_.data());
         jsonError_.clear();
         jsonOpen_ = true;
     }

@@ -7,6 +7,7 @@ class StudioWidgets {
     static void recordEdit(const char *key);
 
   public:
+    static void configureInputs();
     static void beginEdits();
     static unsigned editedItem();
     static Json &member(Json &, const std::string &, Json fallback);

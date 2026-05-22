@@ -234,6 +234,8 @@ void StudioApp::fileDialog() {
 void StudioApp::dialogs() {
     fileDialog();
     if (jsonOpen_) {
+        // The inspector has committed this frame's edits before the JSON snapshot is taken.
+        jsonText_ = StudioDocument::formatted(document_.data());
         ImGui::OpenPopup("Scene JSON");
         jsonOpen_ = false;
     }

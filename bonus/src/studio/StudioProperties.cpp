@@ -215,6 +215,7 @@ void StudioApp::inspector(float width, float height) {
                  ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize |
                      ImGuiWindowFlags_NoSavedSettings);
     ImGui::SeparatorText("PROPRIETES");
+    ImGui::TextDisabled("Clic : saisir / glisser : ajuster");
     if (ImGui::IsKeyPressed(ImGuiKey_F2, false) &&
         !ImGui::IsPopupOpen(nullptr, ImGuiPopupFlags_AnyPopupId))
         ImGui::SetKeyboardFocusHere();
@@ -232,6 +233,10 @@ void StudioApp::inspector(float width, float height) {
     W::beginEdits();
     auto before = document_.data().dump();
     ImGui::PushID(static_cast<int>(selection_));
+    if (selection_ == StudioSelection::Material)
+        ImGui::PushID(material_.c_str());
+    else
+        ImGui::PushID(selected_);
     try {
         if (selection_ == StudioSelection::Environment)
             environmentProperties();
@@ -250,6 +255,7 @@ void StudioApp::inspector(float width, float height) {
     } catch (const std::exception &error) {
         message_ = error.what();
     }
+    ImGui::PopID();
     ImGui::PopID();
     if (document_.data().dump() != before) {
         // A drag or text entry is one undo step, even when it spans many frames.

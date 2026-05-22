@@ -1,5 +1,6 @@
 #include "rt/studio/StudioPresets.hpp"
 #include "rt/io/ResourcePaths.hpp"
+#include "rt/studio/StudioTransforms.hpp"
 #include "rt/studio/StudioWidgets.hpp"
 
 namespace rt {
@@ -41,7 +42,9 @@ Json StudioPresets::object(const std::string &type, const std::string &material)
         object["children"] = Json(Json::Array{Json(
             Json::Object{{"type", Json(std::string("sphere"))}, {"material", Json(material)}})});
     }
-    return Json(std::move(object));
+    Json result(std::move(object));
+    StudioTransforms::normalize(result);
+    return result;
 }
 
 Json StudioPresets::light(const std::string &type) {

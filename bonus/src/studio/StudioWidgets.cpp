@@ -26,6 +26,11 @@ Json &StudioWidgets::member(Json &json, const std::string &key, Json fallback) {
 }
 
 #ifdef RT_NATIVE_STUDIO
+void StudioWidgets::configureInputs() {
+    // Numeric controls remain draggable, while an ordinary click also permits typing.
+    ImGui::GetIO().ConfigDragClickToInputText = true;
+}
+
 void StudioWidgets::recordEdit(const char *key) {
     editedItem_ = ImGui::GetID(key);
 }
@@ -52,9 +57,11 @@ bool StudioWidgets::vector(Json &json, const char *key, const char *label, Vec3 
     Vec3 v = json.vector(key, fallback);
     double values[3]{v.x, v.y, v.z};
     ImGui::TextUnformatted(label);
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip("JSON: %s = [X, Y, Z]", key);
     ImGui::SetNextItemWidth(-1);
     if (!ImGui::DragScalarN((std::string("##") + key).c_str(), ImGuiDataType_Double, values, 3,
-                            .025f, nullptr, nullptr, "%.3f"))
+                            .025f, nullptr, nullptr, "%.6g"))
         return false;
     for (double value : values)
         if (!std::isfinite(value) || std::abs(value) > 1e9)

@@ -1,5 +1,6 @@
 #include "rt/studio/StudioDocument.hpp"
 #include "rt/io/SceneAdapter.hpp"
+#include "rt/studio/StudioTransforms.hpp"
 #include <chrono>
 #include <fstream>
 #include <functional>
@@ -105,8 +106,11 @@ void StudioDocument::replace(Json json) {
             for (const auto &child : object.at("children").array())
                 inspectObject(child);
     };
-    for (const auto &object : json.at("objects").array())
+    for (auto &object :
+         std::get<Json::Array>(std::get<Json::Object>(json.value).at("objects").value)) {
+        StudioTransforms::normalize(object);
         inspectObject(object);
+    }
     for (const auto &[name, material] : json.at("materials").object()) {
         (void)name;
         material.object();
