@@ -1,0 +1,279 @@
+{
+  "camera": {
+    "position": [
+      0.65,
+      2.55,
+      8.2
+    ],
+    "target": [
+      0.4,
+      1.85,
+      -1.3
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "fov": 37
+  },
+  "render": {
+    "width": 1100,
+    "height": 640,
+    "samples": 2048,
+    "threads": 0,
+    "depth": 14,
+    "integrator": "pbr",
+    "toneMap": "neutral",
+    "colorSpace": "srgb",
+    "exposure": 1.2,
+    "output": "gallery/07_cornell_sculpture.ppm"
+  },
+  "background": [
+    0,
+    0,
+    0
+  ],
+  "materials": {
+    "plaster": {
+      "type": "pbr",
+      "color": [
+        0.55,
+        0.5335,
+        0.517
+      ],
+      "roughness": 0.9
+    },
+    "red": {
+      "type": "pbr",
+      "color": [
+        0.8,
+        0.008,
+        0.012
+      ],
+      "roughness": 0.23
+    }
+  },
+  "objects": [
+    {
+      "type": "plane",
+      "material": "plaster",
+      "translate": [
+        0,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "plaster",
+      "translate": [
+        0,
+        4.7,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "plaster",
+      "translate": [
+        0,
+        0,
+        -2.8
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "plaster",
+      "translate": [
+        -1.6,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "plaster",
+      "translate": [
+        3.4,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "type": "obj",
+      "material": "red",
+      "translate": [
+        -0.15,
+        0.002,
+        -1.75
+      ],
+      "rotate": [
+        0,
+        25,
+        0
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "file": "07_cornell_sculpture.obj"
+    }
+  ],
+  "lights": [
+    {
+      "type": "area",
+      "position": [
+        -1.05,
+        0.08,
+        -0.15
+      ],
+      "u": [
+        0.95,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        -0.1,
+        -0.65
+      ],
+      "intensity": 70,
+      "color": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "type": "area",
+      "position": [
+        2.45,
+        3.65,
+        -0.65
+      ],
+      "u": [
+        0.55,
+        0,
+        0.85
+      ],
+      "v": [
+        0,
+        -1.05,
+        0
+      ],
+      "intensity": 10,
+      "color": [
+        1,
+        1,
+        1
+      ]
+    }
+  ]
+}

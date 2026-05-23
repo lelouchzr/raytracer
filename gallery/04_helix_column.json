@@ -1,0 +1,3768 @@
+{
+  "camera": {
+    "position": [
+      7,
+      4.3,
+      10
+    ],
+    "target": [
+      0,
+      2.5,
+      0
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "fov": 38
+  },
+  "render": {
+    "width": 960,
+    "height": 640,
+    "samples": 96,
+    "threads": 0,
+    "depth": 5,
+    "integrator": "whitted",
+    "toneMap": "none",
+    "colorSpace": "srgb",
+    "exposure": 1,
+    "output": "gallery/04_helix_column.ppm"
+  },
+  "background": [
+    0.015,
+    0.02,
+    0.03
+  ],
+  "materials": {
+    "red": {
+      "type": "phong",
+      "color": [
+        0.75,
+        0.015,
+        0.025
+      ],
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "green": {
+      "type": "phong",
+      "color": [
+        0.02,
+        0.65,
+        0.04
+      ],
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "blue": {
+      "type": "phong",
+      "color": [
+        0.035,
+        0.04,
+        0.8
+      ],
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "yellow": {
+      "type": "phong",
+      "color": [
+        0.8,
+        0.7,
+        0.02
+      ],
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "cyan": {
+      "type": "phong",
+      "color": [
+        0.015,
+        0.65,
+        0.6
+      ],
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "magenta": {
+      "type": "phong",
+      "color": [
+        0.65,
+        0.02,
+        0.4
+      ],
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "white": {
+      "type": "phong",
+      "color": [
+        0.72,
+        0.72,
+        0.72
+      ],
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "floor": {
+      "type": "phong",
+      "color": [
+        0.48,
+        0.48,
+        0.48
+      ],
+      "specular": 0.6,
+      "shininess": 100
+    },
+    "metal": {
+      "type": "phong",
+      "color": [
+        0.65,
+        0.65,
+        0.65
+      ],
+      "reflection": 0.25,
+      "specular": 0.8,
+      "shininess": 100
+    }
+  },
+  "objects": [
+    {
+      "type": "plane",
+      "material": "red",
+      "translate": [
+        0,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "red",
+      "translate": [
+        0,
+        6,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "red",
+      "translate": [
+        0,
+        0,
+        -4.5
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "type": "limited_cylinder",
+      "material": "metal",
+      "translate": [
+        0,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 1,
+      "height": 5.5
+    },
+    {
+      "type": "limited_cone",
+      "material": "green",
+      "translate": [
+        -3.4,
+        0,
+        -3
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.6,
+      "height": 3
+    },
+    {
+      "type": "limited_cone",
+      "material": "green",
+      "translate": [
+        -3.4,
+        6,
+        -3
+      ],
+      "rotate": [
+        180,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.6,
+      "height": 3
+    },
+    {
+      "type": "limited_cone",
+      "material": "green",
+      "translate": [
+        -3.4,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.6,
+      "height": 3
+    },
+    {
+      "type": "limited_cone",
+      "material": "green",
+      "translate": [
+        -3.4,
+        6,
+        0
+      ],
+      "rotate": [
+        180,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.6,
+      "height": 3
+    },
+    {
+      "type": "limited_cone",
+      "material": "green",
+      "translate": [
+        3.4,
+        0,
+        -3
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.6,
+      "height": 3
+    },
+    {
+      "type": "limited_cone",
+      "material": "green",
+      "translate": [
+        3.4,
+        6,
+        -3
+      ],
+      "rotate": [
+        180,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.6,
+      "height": 3
+    },
+    {
+      "type": "limited_cone",
+      "material": "green",
+      "translate": [
+        3.4,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.6,
+      "height": 3
+    },
+    {
+      "type": "limited_cone",
+      "material": "green",
+      "translate": [
+        3.4,
+        6,
+        0
+      ],
+      "rotate": [
+        180,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.6,
+      "height": 3
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.18,
+        0.3,
+        0.0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.1609355574899833,
+        0.416,
+        0.21125489664247252
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.104358251939963,
+        0.532,
+        0.41568359526460613
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.0120962440093124,
+        0.648,
+        0.6066804701506735
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.8871307603862562,
+        0.764,
+        0.7780739129263382
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.7334997625593841,
+        0.8800000000000001,
+        0.9243257533604302
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.5561674697250132,
+        0.996,
+        1.040710212124238
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.36086395188638143,
+        1.112,
+        1.1234666030768086
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.15389997631101174,
+        1.228,
+        1.16992085086619
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.05803690985872099,
+        1.344,
+        1.1785718972952184
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.2680984717378425,
+        1.4600000000000002,
+        1.1491402044362704
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.4694970710721008,
+        1.576,
+        1.0825767872325356
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.655724992575723,
+        1.6920000000000002,
+        0.981032483718846
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.8207647252262245,
+        1.808,
+        0.8477884558215689
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.9592834037778701,
+        1.9240000000000002,
+        0.6871501664384165
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -1.066805127580132,
+        2.04,
+        0.5043082586759196
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -1.1398555886296102,
+        2.156,
+        0.30517083260011074
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -1.176074335544935,
+        2.2720000000000002,
+        0.09617253907711756
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -1.1742910459221199,
+        2.388,
+        -0.11593334061922772
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -1.1345633425111525,
+        2.504,
+        -0.3242931109812863
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -1.0581749312742936,
+        2.62,
+        -0.5221741230879254
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.9475941214902824,
+        2.7359999999999998,
+        -0.7031823240931614
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.8063940682283368,
+        2.852,
+        -0.8614688657903734
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.6391373143661243,
+        2.968,
+        -0.9919190961892295
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.4512283629009627,
+        3.084,
+        -1.0903178272933616
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.24873904332832003,
+        3.2,
+        -1.1534855388448144
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        -0.03821231495647518,
+        3.316,
+        -1.1793811169361952
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.17354915321479744,
+        3.432,
+        -1.1671678077373564
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.3797027945146717,
+        3.548,
+        -1.1172402551992784
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.5735872458197694,
+        3.664,
+        -1.0312117490762462
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.748937593612308,
+        3.78,
+        -0.9118620953160654
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.9000878097149964,
+        3.896,
+        -0.7630477932622964
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.0221538354748392,
+        4.0120000000000005,
+        -0.5895774220779448
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.1111913984672193,
+        4.128,
+        -0.39705626298103597
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.1643234622499328,
+        4.244000000000001,
+        -0.19170517795388192
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.1798331909324298,
+        4.36,
+        0.01984040257153266
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.1572194246319765,
+        4.476,
+        0.2307448878186412
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.0972128732597075,
+        4.592,
+        0.4341934024754139
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        1.0017525053730154,
+        4.708,
+        0.6236119931326582
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.8739228950321722,
+        4.824,
+        0.7928800499057765
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.7178545511480611,
+        4.94,
+        0.9365280793420001
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.5385904499403625,
+        5.056,
+        1.0499144380534242
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.341923083191424,
+        5.172,
+        1.129375316350092
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "blue",
+      "translate": [
+        0.13420728769273874,
+        5.288,
+        1.1723431255098304
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.5957184034278319,
+        0.3,
+        1.0185870526456708
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.7684509994225042,
+        0.416,
+        0.8954792356534876
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.9163529345692858,
+        0.532,
+        0.7434361433951527
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.034645110665252,
+        0.648,
+        0.5673706856866049
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.1195051982348665,
+        0.764,
+        0.372971997776123
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.1681911459885255,
+        0.8800000000000001,
+        0.1665216095106433
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.1791297836686105,
+        0.996,
+        -0.045309527316177746
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.1519676552934435,
+        1.112,
+        -0.2556765948571085
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.0875824402441399,
+        1.228,
+        -0.45778208317124175
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.9880545931491787,
+        1.344,
+        -0.6450954355417584
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.8566001189561654,
+        1.4600000000000002,
+        -0.811564067837089
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.697466655403977,
+        1.576,
+        -0.9518089433282237
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.5157962207422928,
+        1.6920000000000002,
+        -1.0612983834285097
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.3174590616785319,
+        1.808,
+        -1.1364944980765133
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.10886397035942376,
+        1.9240000000000002,
+        -1.1749675042134495
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.10324880045854674,
+        2.04,
+        -1.175474238426292
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.3120253325975858,
+        2.156,
+        -1.137998326807806
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.5107195104739534,
+        2.2720000000000002,
+        -1.0637507140402986
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.6929110057296862,
+        2.388,
+        -0.9551305346070109
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.852712734827298,
+        2.504,
+        -0.8156475904846099
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.9849610861102079,
+        2.62,
+        -0.6498089402652132
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        1.085382769595234,
+        2.7359999999999998,
+        -0.46297326430991553
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        1.1507328981441396,
+        2.852,
+        -0.2611777117764632
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        1.1788998382505804,
+        2.968,
+        -0.05094282454629984
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        1.1689734424394007,
+        3.084,
+        0.1609381585310852
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        1.1212744585110648,
+        3.2,
+        0.36761880894578586
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        1.0373441653416537,
+        3.316,
+        0.5624207345321005
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.9198945701328239,
+        3.432,
+        0.7390493757795531
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.7727207763687826,
+        3.548,
+        0.8917973995073241
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.6005783541007119,
+        3.664,
+        1.015729117720704
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.40902967504533044,
+        3.78,
+        1.1068399725941918
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        0.20426417781233444,
+        3.896,
+        1.1621859342044418
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.007101629038897236,
+        4.0120000000000005,
+        1.1799786298340296
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.2182379636892145,
+        4.128,
+        1.1596431309695172
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.4223224591662182,
+        4.244000000000001,
+        1.1018365307448277
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.6127606118576889,
+        4.36,
+        1.008426711544171
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.7833988671641369,
+        4.476,
+        0.88243198883877
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -0.9287234569359017,
+        4.592,
+        0.7279235815228328
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.0440385637373981,
+        4.708,
+        0.5498940601871879
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.125618054985315,
+        4.824,
+        0.35409602411080027
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.1708258840340717,
+        4.94,
+        0.14685621973833488
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.1782012677346811,
+        5.056,
+        -0.06512889303826792
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.1475058881573976,
+        5.172,
+        -0.27500952100627696
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "yellow",
+      "translate": [
+        -1.0797315932670932,
+        5.288,
+        -0.4760038723591481
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.5785077691820253,
+        0.3,
+        -1.028459411448034
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.3850365702213465,
+        0.416,
+        -1.1154133043819145
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.17912383302805854,
+        0.532,
+        -1.166325277288174
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.03257686351596959,
+        0.648,
+        -1.1795502312167387
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.24322491643007083,
+        0.764,
+        -1.1546608333305435
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.44601373640131664,
+        0.8800000000000001,
+        -1.0924613251467243
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.6343906864805284,
+        0.996,
+        -0.9949615353905717
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.8022688149134712,
+        1.112,
+        -0.8653119371748746
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.9442235404659113,
+        1.228,
+        -0.7077018479769708
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        1.0556679348254407,
+        1.344,
+        -0.5272240618384074
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        1.1330009382474318,
+        1.4600000000000002,
+        -0.3297102878747325
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        1.1737237192100787,
+        1.576,
+        -0.12154271250741545
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        1.1765204181938722,
+        1.6920000000000002,
+        0.09055222566517232
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        1.1413006665428893,
+        1.808,
+        0.2997211846846273
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        1.0692025065123287,
+        1.9240000000000002,
+        0.49920536862873716
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.9625556181479211,
+        2.04,
+        0.6825589219780762
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.8248060412328784,
+        2.156,
+        0.8438572120600422
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.6604048247330924,
+        2.2720000000000002,
+        0.9778882694200056
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.47466420176811686,
+        2.388,
+        1.0803212001806852
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.27358593747064686,
+        2.504,
+        1.1478461285461161
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.0636673962639267,
+        2.62,
+        1.1782811475420338
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.14830840496963532,
+        2.7359999999999998,
+        1.1706428221346434
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.35549197389761006,
+        2.852,
+        1.1251779665876775
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.551188667742291,
+        2.968,
+        1.0433556692482568
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.729075014691471,
+        3.084,
+        0.9278198224615765
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.8834030418049305,
+        3.2,
+        0.7823036914969763
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -1.009186007047773,
+        3.316,
+        0.6115092829867526
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -1.1023595339630299,
+        3.432,
+        0.4209554107988297
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -1.1599129423009873,
+        3.548,
+        0.21679936873216793
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -1.1799865309692465,
+        3.664,
+        0.005637972256351643
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -1.1619316698370699,
+        3.78,
+        -0.20570560184311598
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -1.1063317586706949,
+        3.896,
+        -0.41040229014542207
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -1.0149833759616371,
+        4.0120000000000005,
+        -0.6018378074876302
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.8908382267786078,
+        4.128,
+        -0.7738263718108511
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.7379077654597378,
+        4.244000000000001,
+        -0.9208105829508132
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.5611335750352712,
+        4.36,
+        -1.0380409967665707
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.3662276917604655,
+        4.476,
+        -1.1217295920977575
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        -0.15948803429050123,
+        4.592,
+        -1.1691721716317711
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.05240509853669488,
+        4.708,
+        -1.1788357415888606
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.2626048856210358,
+        4.824,
+        -1.1504080467590456
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.4643192222905093,
+        4.94,
+        -1.084807660284318
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.6510301909605727,
+        5.056,
+        -0.9841543021588842
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.8167046720919,
+        5.172,
+        -0.8517003455343093
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    },
+    {
+      "type": "sphere",
+      "material": "magenta",
+      "translate": [
+        0.955989290055841,
+        5.288,
+        -0.6917257240399036
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 0.17
+    }
+  ],
+  "lights": [
+    {
+      "type": "ambient",
+      "intensity": 0.13
+    },
+    {
+      "type": "point",
+      "position": [
+        -1.5,
+        5.5,
+        4
+      ],
+      "intensity": 2.3
+    }
+  ]
+}

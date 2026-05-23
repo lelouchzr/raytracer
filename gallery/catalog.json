@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "entries": [
+    {
+      "id": "02_rgb_lattice",
+      "title": "RGB cylinder lattice",
+      "scene": "gallery/02_rgb_lattice.json",
+      "image": "gallery/02_rgb_lattice.png",
+      "ppm": "gallery/02_rgb_lattice.ppm",
+      "purpose": "subject illustration"
+    },
+    {
+      "id": "04_helix_column",
+      "title": "Helices around a reflective column",
+      "scene": "gallery/04_helix_column.json",
+      "image": "gallery/04_helix_column.png",
+      "ppm": "gallery/04_helix_column.ppm",
+      "purpose": "subject illustration"
+    },
+    {
+      "id": "05_primitive_museum",
+      "title": "Finite primitive museum",
+      "scene": "gallery/05_primitive_museum.json",
+      "image": "gallery/05_primitive_museum.png",
+      "ppm": "gallery/05_primitive_museum.ppm",
+      "purpose": "physical rendering"
+    },
+    {
+      "id": "06_product_studio",
+      "title": "Glass, gold and ceramic product study",
+      "scene": "gallery/06_product_studio.json",
+      "image": "gallery/06_product_studio.png",
+      "ppm": "gallery/06_product_studio.ppm",
+      "purpose": "physical rendering"
+    },
+    {
+      "id": "07_cornell_sculpture",
+      "title": "Faceted red head and indirect illumination",
+      "scene": "gallery/07_cornell_sculpture.json",
+      "image": "gallery/07_cornell_sculpture.png",
+      "ppm": "gallery/07_cornell_sculpture.ppm",
+      "purpose": "physical rendering"
+    },
+    {
+      "id": "08_cornell_glass",
+      "title": "Cornell box, glass and color bleeding",
+      "scene": "gallery/08_cornell_glass.json",
+      "image": "gallery/08_cornell_glass.png",
+      "ppm": "gallery/08_cornell_glass.ppm",
+      "purpose": "physical rendering"
+    },
+    {
+      "id": "09_texture_materials",
+      "title": "Textures, normal maps and rough metals",
+      "scene": "gallery/09_texture_materials.json",
+      "image": "gallery/09_texture_materials.png",
+      "ppm": "gallery/09_texture_materials.ppm",
+      "purpose": "physical rendering"
+    }
+  ]
+}

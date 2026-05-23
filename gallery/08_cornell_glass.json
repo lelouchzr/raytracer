@@ -1,0 +1,309 @@
+{
+  "camera": {
+    "position": [
+      0,
+      2.5,
+      9.8
+    ],
+    "target": [
+      0,
+      2.3,
+      0
+    ],
+    "up": [
+      0,
+      1,
+      0
+    ],
+    "fov": 38
+  },
+  "render": {
+    "width": 960,
+    "height": 800,
+    "samples": 768,
+    "threads": 0,
+    "depth": 14,
+    "integrator": "pbr",
+    "toneMap": "neutral",
+    "colorSpace": "srgb",
+    "exposure": 1,
+    "output": "gallery/08_cornell_glass.ppm"
+  },
+  "background": [
+    0,
+    0,
+    0
+  ],
+  "materials": {
+    "white": {
+      "type": "pbr",
+      "color": [
+        0.72,
+        0.72,
+        0.72
+      ],
+      "roughness": 0.8
+    },
+    "red": {
+      "type": "pbr",
+      "color": [
+        0.62,
+        0.025,
+        0.025
+      ],
+      "roughness": 0.6
+    },
+    "green": {
+      "type": "pbr",
+      "color": [
+        0.035,
+        0.42,
+        0.08
+      ],
+      "roughness": 0.6
+    },
+    "glass": {
+      "type": "pbr",
+      "color": [
+        1,
+        1,
+        1
+      ],
+      "roughness": 0.025,
+      "transmission": 1,
+      "ior": 1.5,
+      "absorption": [
+        0.045,
+        0.01,
+        0.007
+      ]
+    }
+  },
+  "objects": [
+    {
+      "type": "plane",
+      "material": "white",
+      "translate": [
+        0,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "white",
+      "translate": [
+        0,
+        5,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        -1,
+        0
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "white",
+      "translate": [
+        0,
+        0,
+        -2.5
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "red",
+      "translate": [
+        -2.5,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "type": "plane",
+      "material": "green",
+      "translate": [
+        2.5,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "normal": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "type": "box",
+      "material": "white",
+      "translate": [
+        -1.1,
+        1.05,
+        -0.5
+      ],
+      "rotate": [
+        0,
+        22,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        1.35,
+        2.1,
+        1.4
+      ]
+    },
+    {
+      "type": "sphere",
+      "material": "glass",
+      "translate": [
+        1.05,
+        1.0,
+        0.55
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "shear": [
+        0,
+        0,
+        0
+      ],
+      "radius": 1
+    }
+  ],
+  "lights": [
+    {
+      "type": "area",
+      "position": [
+        0,
+        4.97,
+        0
+      ],
+      "u": [
+        1.7,
+        0,
+        0
+      ],
+      "v": [
+        0,
+        0,
+        1.7
+      ],
+      "intensity": 12,
+      "color": [
+        1,
+        1,
+        1
+      ]
+    }
+  ]
+}
