@@ -31,7 +31,7 @@ void NativeStudio::run(int argc, char **argv) {
             throw std::runtime_error("studio expects one scene file");
     }
     if (!haveSource)
-        source = resourceRoot() / "bonus/scenes/pbr_studio.json";
+        source = resourceRoot() / "gallery/06_product_studio.json";
     StudioApp application(source);
     application.run(frames, screenshot);
 #endif

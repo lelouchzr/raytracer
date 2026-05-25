@@ -7,6 +7,7 @@
 #include <SDL.h>
 #include <backends/imgui_impl_sdl2.h>
 #include <backends/imgui_impl_sdlrenderer2.h>
+#include <cctype>
 #include <fstream>
 #include <imgui.h>
 #include <misc/cpp/imgui_stdlib.h>
@@ -195,10 +196,13 @@ void StudioApp::tree(float height) {
         ImGui::OpenPopup("Examples");
     if (ImGui::BeginPopup("Examples")) {
         std::vector<std::filesystem::path> examples;
-        for (const auto &entry :
-             std::filesystem::directory_iterator(resourceRoot() / "bonus/scenes"))
-            if (entry.path().extension() == ".json")
+        for (const auto &entry : std::filesystem::directory_iterator(resourceRoot() / "gallery")) {
+            auto name = entry.path().stem().string();
+            // Numbered scenes are selectable; the catalog and render manifest are metadata.
+            if (entry.path().extension() == ".json" && !name.empty() &&
+                std::isdigit(static_cast<unsigned char>(name.front())))
                 examples.push_back(entry.path());
+        }
         std::sort(examples.begin(), examples.end());
         for (const auto &path : examples)
             if (ImGui::Selectable(path.stem().string().c_str())) {

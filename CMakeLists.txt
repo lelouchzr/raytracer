@@ -89,14 +89,30 @@ if(APPLE AND RAYTRACER_BONUS AND SDL2_FOUND AND ZLIB_FOUND)
     MACOSX_BUNDLE_BUNDLE_VERSION "3.0"
     MACOSX_BUNDLE_SHORT_VERSION_STRING "3.0")
   add_dependencies(raytracer_studio raytracer_example)
-  add_custom_command(TARGET raytracer_studio POST_BUILD
+  # Refresh authored resources on every build, including resource-only edits.
+  add_custom_target(stage_studio_resources ALL
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/bonus/assets"
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/bonus/assets"
       "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/bonus/assets"
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/bonus/scenes"
     COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/bonus/scenes"
       "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/bonus/scenes"
+    COMMAND ${CMAKE_COMMAND} -E rm -rf
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/gallery"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_SOURCE_DIR}/gallery"
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/gallery"
     COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/plugins"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:raytracer_example>
-      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/plugins/raytracer_example.so")
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/plugins/raytracer_example.so"
+    COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/licenses"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/LICENSE"
+      "${CMAKE_SOURCE_DIR}/THIRD_PARTY_NOTICES.md"
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/licenses/"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/bonus/vendor/imgui/LICENSE.txt"
+      "$<TARGET_BUNDLE_CONTENT_DIR:raytracer_studio>/Resources/licenses/imgui.txt"
+    DEPENDS raytracer_studio raytracer_example)
 endif()
 include(CTest)
 if(BUILD_TESTING)

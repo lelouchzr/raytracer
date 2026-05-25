@@ -61,7 +61,7 @@ def main():
         shutil.copytree(root / 'scenes', package / 'scenes')
         for directory in ('assets', 'scenes'):
             shutil.copytree(root / 'bonus' / directory, package / 'bonus' / directory)
-        (package / 'screenshots').mkdir()
+        shutil.copytree(root / 'gallery', package / 'gallery')
         for notice in ('LICENSE', 'THIRD_PARTY_NOTICES.md'):
             shutil.copy2(root / notice, package / notice)
         (package / 'licenses').mkdir()
@@ -78,7 +78,7 @@ def main():
             binaries.append(app / 'Contents/MacOS/Atelier')
         (package / 'README.txt').write_text(f'''Raytracer / Atelier {args.version} — {system} {architecture}
 
-Extract the entire directory. Keep bonus/, scenes/ and plugins/ beside raytracer.
+Extract the entire directory. Keep gallery/, bonus/, scenes/ and plugins/ beside raytracer.
     ./raytracer --studio
     ./raytracer --preview bonus/scenes/pbr_showcase.json
     ./raytracer --gui --watch bonus/scenes/pbr_showcase.json
