@@ -6,6 +6,7 @@ A remake and enhanced version of the original project I completed during my **se
 
 This implementation adds reflections and refraction, PBR path tracing, a native editor, and distributed rendering.
 
+![Glass and gold, rendered by the C++ engine](gallery/06_product_studio.png)
 
 ## What it renders
 
@@ -73,6 +74,18 @@ More samples reduce Monte Carlo noise at a higher CPU cost. Photon mapping uses 
 - **Keep the result:** save a JSON scene, export the displayed PNG, or calculate linear HDR output as PFM.
 
 The studio is a native **C++ SDL2/ImGui** application. The render worker runs separately from the interface, so scene editing can interrupt an ongoing calculation. [Controls and settings](doc/pbr-studio.md).
+
+## Editable examples
+
+[Browse seven selected scenes, each with JSON, PNG and PPM](gallery/README.md): an RGB lattice, a helical column, a primitive museum, glass/gold product lighting, two global-illumination rooms and material studies.
+
+The files are together in the root `gallery/` directory, for example `07_cornell_sculpture.json`, `07_cornell_sculpture.png` and `07_cornell_sculpture.ppm`. Its companion OBJ contains the original faceted head mesh.
+
+```sh
+./raytracer --studio gallery/06_product_studio.json
+```
+
+The examples are also available in Atelier's example menu. Numeric properties accept ordinary-click typing; object transforms remain explicit in the saved JSON.
 
 ## How it works
 

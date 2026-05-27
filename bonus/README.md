@@ -10,6 +10,6 @@ Enabled by default. `make BUILD=build-core BONUS=OFF` builds the core; `make` re
 | `studio`, `display` | SDL2/ImGui studio, SFML viewer |
 | `plugins`, `network`, `scene` | ABI 3, leases, TCP RTR1, builder extensions |
 
-`plugins/`: complete example; `assets/`: bundled resources; `scenes/`: demonstrations; `render_gallery.py`: screenshots.
+`plugins/`: complete example; `assets/`: bundled resources; `scenes/`: demonstrations; `render_gallery.py`: regenerate the selected root `gallery/`.
 
 [Features/evidence](../doc/feature-matrix.md) · [Studio/PBR](../doc/pbr-studio.md) · [Optical trade-offs](../doc/optics.md) · [Tests](../doc/validation.md).

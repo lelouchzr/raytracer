@@ -12,7 +12,7 @@ Historical report from `35988e8`, covering classic-renderer fixes. [Current PBR]
 | Overly hard shadows | Finite area light and next-event estimation |
 | Grazing-angle acne | Offset to the correct side of geometric normal; fixed epsilon |
 
-[Previous gallery](../bonus/quality/before-gallery.png) · [Previous GI](../bonus/quality/before-global_illumination.png) · [Current gallery](../screenshots/gallery.png). Scenes changed too, so this visual comparison does not isolate the algorithm.
+[Previous gallery](../bonus/quality/before-gallery.png) · [Previous GI](../bonus/quality/before-global_illumination.png) · [Current gallery](../gallery/05_primitive_museum.png). Scenes changed too, so this visual comparison does not isolate the algorithm.
 
 ## Verified formulas
 

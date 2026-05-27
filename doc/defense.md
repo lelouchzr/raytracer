@@ -29,4 +29,4 @@ An Epitech project completed during my **second year at Epitech**. Reference: Ra
 | Extensibility | ABI 3 plugin, two TCP workers |
 | Validation | `make test`, [reports](validation.md), measurements |
 
-Use bundled screenshots during long calculations. Explain Monte Carlo noise, finite depth/epsilon, fixed-radius photon mapping, closed nested volumes, and replicated network assets. [Optical details](optics.md).
+Use the images in `gallery/` during long calculations. Explain Monte Carlo noise, finite depth/epsilon, fixed-radius photon mapping, closed nested volumes, and replicated network assets. [Optical details](optics.md).
