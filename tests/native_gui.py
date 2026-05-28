@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 """Open the real native C++ studio and verify its actual framebuffer PNG."""
 
+import argparse
 import json
 from pathlib import Path
 import struct
 import subprocess
-import sys
 import tempfile
 import zlib
 
-binary = Path(sys.argv[1]).resolve()
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('binary', type=Path)
+parser.add_argument('--app', action='store_true', help='Test the direct Atelier app entry point')
+args = parser.parse_args()
+binary = args.binary.resolve()
+command = [str(binary), *([] if args.app else ['--studio'])]
 with tempfile.TemporaryDirectory(prefix="native-gui-") as name:
     folder = Path(name)
     scene = {
@@ -42,8 +47,7 @@ with tempfile.TemporaryDirectory(prefix="native-gui-") as name:
     png = folder / "native.png"
     result = subprocess.run(
         [
-            str(binary),
-            "--studio",
+            *command,
             str(path),
             "--frames",
             "45",
@@ -72,9 +76,13 @@ with tempfile.TemporaryDirectory(prefix="native-gui-") as name:
     pixels = zlib.decompress(compressed)
     assert len(pixels) == height * (width * 4 + 1)
     assert len(set(pixels)) > 64, "native GUI framebuffer is blank"
+    default = subprocess.run(
+        [*command, "--frames", "4"], capture_output=True, timeout=25
+    )
+    assert default.returncode == 0, default.stderr.decode(errors="replace")
     for arguments in (["--frames", "2junk"], ["--port", "0"]):
         bad = subprocess.run(
-            [str(binary), "--studio", *arguments], capture_output=True, timeout=5
+            [*command, *arguments], capture_output=True, timeout=5
         )
         assert bad.returncode == 84
 print(

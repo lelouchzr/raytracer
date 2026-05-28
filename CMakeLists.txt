@@ -163,6 +163,8 @@ if(BUILD_TESTING)
   find_package(Python3 COMPONENTS Interpreter)
   if(Python3_FOUND)
     if(RAYTRACER_BONUS)
+      add_test(NAME example_scenes COMMAND ${Python3_EXECUTABLE} ${CMAKE_SOURCE_DIR}/tests/examples.py
+        $<TARGET_FILE:raytracer> ${CMAKE_SOURCE_DIR})
       add_executable(resource_paths_tests tests/asset_paths.cpp)
       target_link_libraries(resource_paths_tests PRIVATE raytracer_engine)
       add_test(NAME resource_paths COMMAND ${Python3_EXECUTABLE}
